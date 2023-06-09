@@ -1,0 +1,1642 @@
+{% load static %}
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboards</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://unpkg.com/chart.js@2.8.0/dist/Chart.bundle.js"></script>
+  <script src="https://unpkg.com/chartjs-gauge@0.3.0/dist/chartjs-gauge.js"></script>
+  <script src="https://unpkg.com/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.js"></script>
+        <link href="{% static 'css/style5.css'%}" rel="stylesheet">
+</head>
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+<!-- Chart code -->
+<body>
+<script>
+am5.ready(function() {
+var root = am5.Root.new("chartdiv");
+var chart = root.container.children.push(am5radar.RadarChart.new(root, {
+  panX: false,
+  panY: false,
+  startAngle: 180,
+  endAngle: 360
+}));
+var axisRenderer = am5radar.AxisRendererCircular.new(root, {
+  innerRadius: -25
+});
+
+axisRenderer.grid.template.setAll({
+  stroke: false,
+  visible: true,
+  strokeOpacity: 0.8
+});
+
+var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+  min: -100,
+  max: 100,
+  strictMinMax: true,
+  renderer: axisRenderer
+}));
+var axisDataItem = xAxis.makeDataItem({});
+
+var clockHand = am5radar.ClockHand.new(root, {
+  pinRadius: am5.percent(12),
+  radius: am5.percent(100),
+  bottomWidth: 20
+})
+
+var bullet = axisDataItem.set("bullet", am5xy.AxisBullet.new(root, {
+  sprite: clockHand
+}));
+
+xAxis.createAxisRange(axisDataItem);
+
+var label = chart.radarContainer.children.push(am5.Label.new(root, {
+  fill: am5.color(0xffffff),
+  centerX: am5.percent(55),
+  textAlign: "center",
+  centerY: am5.percent(50),
+  fontSize: "90%"
+}));
+axisDataItem.set("value",({{ beeline_nps }}[0]-{{ beeline_nps }}[2])/({{ beeline_nps }}[0] + {{ beeline_nps }}[1]+{{ beeline_nps }}[2]) * 100);
+bullet.get("sprite").on("rotation", function () {
+  var value = axisDataItem.get("value");
+  label.set("text","  " + Math.round(value).toString() + "%", 'white');
+});
+var bandsData = [{
+  angle: 180,
+  color: "#ee1f25",
+  lowScore: -100,
+  highScore: -80
+}, {
+  color: "#f04922",
+  angle: 198,
+  lowScore: -80,
+  highScore: -60
+}, {
+  color: "#f04922",
+  lowScore: -60,
+  angle: 216,
+  highScore: -40
+}, {
+  color: "#f04922",
+  angle: 234,
+  lowScore: -40,
+  highScore: -20
+}, {
+  color: "#f04922",
+  angle: 252,
+  lowScore: -20,
+  highScore: 0
+}, {
+  color: "#ACE1AF",
+  angle: 270,
+  lowScore: 0,
+  highScore: 20
+}, {
+  color: "#4FFFB0",
+  angle: 288,
+  lowScore: 20,
+  highScore: 40
+},
+{
+  color: "#32de84",
+  angle: 306,
+  lowScore: 40,
+  highScore: 60
+},{
+  color: "#17B169",
+  angle: 324,
+  lowScore: 60,
+  highScore: 80
+},{
+  color: "#228B22",
+  angle: 342,
+  lowScore: 80,
+  highScore: 100
+}];
+
+am5.array.each(bandsData, function (data) {
+  var axisRange = xAxis.createAxisRange(xAxis.makeDataItem({}));
+  axisRange.setAll({
+    value: data.lowScore,
+    endValue: data.highScore,
+    startAngle: data.angle,
+    endAngle: data.angle+18,
+  });
+
+  axisRange.get("axisFill").setAll({
+    fill: am5.color(data.color),
+    fillOpacity: 0.9
+  });
+});
+chart.appear(3000);
+
+});
+</script>
+<script>
+am5.ready(function() {
+var root = am5.Root.new("chartdiv1");
+var chart = root.container.children.push(am5radar.RadarChart.new(root, {
+  panX: false,
+  panY: false,
+  startAngle: 180,
+  endAngle: 360
+}));
+var axisRenderer = am5radar.AxisRendererCircular.new(root, {
+  innerRadius: -25
+});
+
+axisRenderer.grid.template.setAll({
+  stroke: false,
+  visible: true,
+  strokeOpacity: 0.8
+});
+
+var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+  min: -100,
+  max: 100,
+  strictMinMax: true,
+  renderer: axisRenderer
+}));
+var axisDataItem = xAxis.makeDataItem({});
+
+var clockHand = am5radar.ClockHand.new(root, {
+  pinRadius: am5.percent(12),
+  radius: am5.percent(100),
+  bottomWidth: 20
+})
+
+var bullet = axisDataItem.set("bullet", am5xy.AxisBullet.new(root, {
+  sprite: clockHand
+}));
+
+xAxis.createAxisRange(axisDataItem);
+
+var label = chart.radarContainer.children.push(am5.Label.new(root, {
+  fill: am5.color(0xffffff),
+  centerX: am5.percent(55),
+  textAlign: "center",
+  centerY: am5.percent(50),
+  fontSize: "90%"
+}));
+axisDataItem.set("value",({{ ucell_nps }}[0]-{{ ucell_nps }}[2])/({{ ucell_nps }}[0] + {{ ucell_nps }}[1]+{{ ucell_nps }}[2]) * 100);
+bullet.get("sprite").on("rotation", function () {
+  var value = axisDataItem.get("value");
+  label.set("text","  " + Math.round(value).toString() + "%", 'white');
+});
+var bandsData = [{
+  angle: 180,
+  color: "#ee1f25",
+  lowScore: -100,
+  highScore: -80
+}, {
+  color: "#f04922",
+  angle: 198,
+  lowScore: -80,
+  highScore: -60
+}, {
+  color: "#f04922",
+  lowScore: -60,
+  angle: 216,
+  highScore: -40
+}, {
+  color: "#f04922",
+  angle: 234,
+  lowScore: -40,
+  highScore: -20
+}, {
+  color: "#f04922",
+  angle: 252,
+  lowScore: -20,
+  highScore: 0
+}, {
+  color: "#ACE1AF",
+  angle: 270,
+  lowScore: 0,
+  highScore: 20
+}, {
+  color: "#4FFFB0",
+  angle: 288,
+  lowScore: 20,
+  highScore: 40
+},
+{
+  color: "#32de84",
+  angle: 306,
+  lowScore: 40,
+  highScore: 60
+},{
+  color: "#17B169",
+  angle: 324,
+  lowScore: 60,
+  highScore: 80
+},{
+  color: "#228B22",
+  angle: 342,
+  lowScore: 80,
+  highScore: 100
+}];
+
+am5.array.each(bandsData, function (data) {
+  var axisRange = xAxis.createAxisRange(xAxis.makeDataItem({}));
+  axisRange.setAll({
+    value: data.lowScore,
+    endValue: data.highScore,
+    startAngle: data.angle,
+    endAngle: data.angle+18,
+  });
+
+  axisRange.get("axisFill").setAll({
+    fill: am5.color(data.color),
+    fillOpacity: 0.9
+  });
+});
+chart.appear(3000);
+
+});
+</script>
+<script>
+am5.ready(function() {
+var root = am5.Root.new("chartdiv2");
+var chart = root.container.children.push(am5radar.RadarChart.new(root, {
+  panX: false,
+  panY: false,
+  startAngle: 180,
+  endAngle: 360
+}));
+var axisRenderer = am5radar.AxisRendererCircular.new(root, {
+  innerRadius: -25
+});
+
+axisRenderer.grid.template.setAll({
+  stroke: false,
+  visible: true,
+  strokeOpacity: 0.8
+});
+
+var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+  min: -100,
+  max: 100,
+  strictMinMax: true,
+  renderer: axisRenderer
+}));
+var axisDataItem = xAxis.makeDataItem({});
+
+var clockHand = am5radar.ClockHand.new(root, {
+  pinRadius: am5.percent(12),
+  radius: am5.percent(100),
+  bottomWidth: 20
+})
+
+var bullet = axisDataItem.set("bullet", am5xy.AxisBullet.new(root, {
+  sprite: clockHand
+}));
+
+xAxis.createAxisRange(axisDataItem);
+
+var label = chart.radarContainer.children.push(am5.Label.new(root, {
+  fill: am5.color(0xffffff),
+  centerX: am5.percent(55),
+  textAlign: "center",
+  centerY: am5.percent(50),
+  fontSize: "90%"
+}));
+axisDataItem.set("value",({{ uzmobile_nps }}[0]-{{ uzmobile_nps }}[2])/({{ uzmobile_nps }}[0] + {{ uzmobile_nps }}[1]+{{ uzmobile_nps }}[2]) * 100);
+bullet.get("sprite").on("rotation", function () {
+  var value = axisDataItem.get("value");
+  label.set("text","  " + Math.round(value).toString() + "%", 'white');
+});
+var bandsData = [{
+  angle: 180,
+  color: "#ee1f25",
+  lowScore: -100,
+  highScore: -80
+}, {
+  color: "#f04922",
+  angle: 198,
+  lowScore: -80,
+  highScore: -60
+}, {
+  color: "#f04922",
+  lowScore: -60,
+  angle: 216,
+  highScore: -40
+}, {
+  color: "#f04922",
+  angle: 234,
+  lowScore: -40,
+  highScore: -20
+}, {
+  color: "#f04922",
+  angle: 252,
+  lowScore: -20,
+  highScore: 0
+}, {
+  color: "#ACE1AF",
+  angle: 270,
+  lowScore: 0,
+  highScore: 20
+}, {
+  color: "#4FFFB0",
+  angle: 288,
+  lowScore: 20,
+  highScore: 40
+},
+{
+  color: "#32de84",
+  angle: 306,
+  lowScore: 40,
+  highScore: 60
+},{
+  color: "#17B169",
+  angle: 324,
+  lowScore: 60,
+  highScore: 80
+},{
+  color: "#228B22",
+  angle: 342,
+  lowScore: 80,
+  highScore: 100
+}];
+
+am5.array.each(bandsData, function (data) {
+  var axisRange = xAxis.createAxisRange(xAxis.makeDataItem({}));
+  axisRange.setAll({
+    value: data.lowScore,
+    endValue: data.highScore,
+    startAngle: data.angle,
+    endAngle: data.angle+18,
+  });
+
+  axisRange.get("axisFill").setAll({
+    fill: am5.color(data.color),
+    fillOpacity: 0.9
+  });
+});
+chart.appear(3000);
+
+});
+</script>
+<script>
+am5.ready(function() {
+var root = am5.Root.new("chartdiv3");
+var chart = root.container.children.push(am5radar.RadarChart.new(root, {
+  panX: false,
+  panY: false,
+  startAngle: 180,
+  endAngle: 360
+}));
+var axisRenderer = am5radar.AxisRendererCircular.new(root, {
+  innerRadius: -25
+});
+
+axisRenderer.grid.template.setAll({
+  stroke: false,
+  visible: true,
+  strokeOpacity: 0.8
+});
+
+var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+  min: -100,
+  max: 100,
+  strictMinMax: true,
+  renderer: axisRenderer
+}));
+var axisDataItem = xAxis.makeDataItem({});
+
+var clockHand = am5radar.ClockHand.new(root, {
+  pinRadius: am5.percent(12),
+  radius: am5.percent(100),
+  bottomWidth: 20
+})
+
+var bullet = axisDataItem.set("bullet", am5xy.AxisBullet.new(root, {
+  sprite: clockHand
+}));
+
+xAxis.createAxisRange(axisDataItem);
+
+var label = chart.radarContainer.children.push(am5.Label.new(root, {
+  fill: am5.color(0xffffff),
+  centerX: am5.percent(55),
+  textAlign: "center",
+  centerY: am5.percent(50),
+  fontSize: "90%"
+}));
+axisDataItem.set("value",({{ mobiuz_nps }}[0]-{{ mobiuz_nps }}[2])/({{ mobiuz_nps }}[0] + {{ mobiuz_nps }}[1]+{{ mobiuz_nps }}[2]) * 100);
+bullet.get("sprite").on("rotation", function () {
+  var value = axisDataItem.get("value");
+  label.set("text","  " + Math.round(value).toString() + "%", 'white');
+});
+var bandsData = [{
+  angle: 180,
+  color: "#ee1f25",
+  lowScore: -100,
+  highScore: -80
+}, {
+  color: "#f04922",
+  angle: 198,
+  lowScore: -80,
+  highScore: -60
+}, {
+  color: "#f04922",
+  lowScore: -60,
+  angle: 216,
+  highScore: -40
+}, {
+  color: "#f04922",
+  angle: 234,
+  lowScore: -40,
+  highScore: -20
+}, {
+  color: "#f04922",
+  angle: 252,
+  lowScore: -20,
+  highScore: 0
+}, {
+  color: "#ACE1AF",
+  angle: 270,
+  lowScore: 0,
+  highScore: 20
+}, {
+  color: "#4FFFB0",
+  angle: 288,
+  lowScore: 20,
+  highScore: 40
+},
+{
+  color: "#32de84",
+  angle: 306,
+  lowScore: 40,
+  highScore: 60
+},{
+  color: "#17B169",
+  angle: 324,
+  lowScore: 60,
+  highScore: 80
+},{
+  color: "#228B22",
+  angle: 342,
+  lowScore: 80,
+  highScore: 100
+}];
+
+am5.array.each(bandsData, function (data) {
+  var axisRange = xAxis.createAxisRange(xAxis.makeDataItem({}));
+  axisRange.setAll({
+    value: data.lowScore,
+    endValue: data.highScore,
+    startAngle: data.angle,
+    endAngle: data.angle+18,
+  });
+
+  axisRange.get("axisFill").setAll({
+    fill: am5.color(data.color),
+    fillOpacity: 0.9
+  });
+});
+chart.appear(3000);
+
+});
+</script>
+
+<main>
+    <div class="desc">
+        <div style="display:flex; justify-content: space-around">
+            <img src="{% static 'img/logo-mamc.png' %}" class="logo-mamc" >
+            <h1 class="title-h1">Metricalist | Net Promoter Score</h1>
+            <img src="{% static 'img/Ucell-01.png' %}" class="logo-zakaz" >
+        </div>
+        <p class="text-feb"> Текущий месяц: Апрель</p>
+    </div>
+
+
+    <div class="general-filt" >
+        <div class="container-filt">
+            <form method="POST">
+            <div id="list1" class="dropdown-check-list" tabindex="100">
+              <span class="anchor">Фильтр по регионам</span>
+              <ul class="items">
+                {% for brand in brands %}
+                <li><input type="checkbox" id="scales" name="scales" value="{{ brand.1 }}" {% if brand.0 in brandy %}
+                                                        checked
+                                                    {% endif %} >{{ brand.0 }}</li>
+                {% endfor %}
+              <button  type="submit" class="btn-sbm">
+                                Применить
+            </button>
+              </ul>
+            </div>
+            </form>
+            <button class="btn-filt">Обновить</button>
+        </div>
+        <div style="margin: 0 10%; display: flex">
+            <p class="filt-text" > <p > Выбранные регионы: </p> {% for brand in brandy %} {{ brand }}, {% endfor %} </p>
+        </div>
+    </div>
+
+    <div class="quta-container">
+        <div class="name-name">
+            <p class="quta-title">Наименование</p>
+            <p class="font">Beeline</p>
+            <p class="font">Ucell</p>
+            <p class="font">Uzmobile</p>
+            <p class="font">Mobiuz</p>
+            <p class="font">Всего</p>
+        </div>
+        <div style="display: flex">
+             <div class="name-logo mr-5">
+                <p class="quta-title font">Квота</p>
+                <p class="quta-title font">{{ beeline_q }}</p>
+                <p class="quta-title font">{{ ucell_q }}</p>
+                <p class="quta-title font">{{ uzmobile_q }}</p>
+                 <p class="quta-title font">{{ mobiuz_q }}</p>
+                 <p class="quta-title font">{{ sum_q }}</p>
+            </div>
+
+            <div class="name-logo ">
+                <p class="quta-title font">Выполнено</p>
+                <p class="quta-title font">{{ beeline_m }}</p>
+                <p class="quta-title font">{{ ucell_m }}</p>
+                <p class="quta-title font">{{ uzmobile_m }}</p>
+                <p class="quta-title font">{{ mobiuz_m }}</p>
+                <p class="quta-title font">{{ sum_made }}</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script>
+        var checkList = document.getElementById('list1');
+        checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+          if (checkList.classList.contains('visible'))
+            checkList.classList.remove('visible');
+          else
+            checkList.classList.add('visible');
+        }
+    </script>
+    <h2 class="region-title indecs-title col-lg-12 col-md-12 col-sm-12 pb-1 col-12">Индекс NPS</h2>
+    <div class="row px-xl-6" style=" width: 100%;margin:0 2.5%; gap: 0.5%" >
+        <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12" style="background-color: white; border: 1px solid black;">
+            <div id="chartdiv1" style="width: 100%"></div>
+            <div class="gen-cont">
+                <img src="{% static 'img/ucell.png' %}" class="ucell-logo">
+                <div class="img-desc green">
+                    <img src="{% static 'img/green.png' %}" class="img-img" >
+                    <h3 class="img-text">Promoters ({{ ucell_p }})</h3>
+                </div>
+                <div class="img-desc yellow">
+                    <img src="{% static 'img/yellow.png' %}" class="img-img">
+                    <h3 class="img-text">Passives ({{ ucell_n }})</h3>
+                </div>
+                <div class="img-desc red">
+                    <img src="{% static 'img/red.png' %}" class="img-img">
+                    <h3 class="img-text">Detractors ({{ ucell_k }})</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12" style="background-color: white; border: 1px solid black;">
+            <div id="chartdiv" style="width: 100%"></div>
+            <div class="gen-cont">
+                <img class="title-bell" src="{% static 'img/beeline.png' %}">
+                <div class="img-desc green">
+                    <img src="{% static 'img/green.png' %}" class="img-img" >
+                    <h3 class="img-text">Promoters ({{ beeline_p }})</h3>
+                </div>
+
+                <div class="img-desc yellow">
+                    <img src="{% static 'img/yellow.png' %}" class="img-img">
+                    <h3 class="img-text">Passives ({{ beeline_n }})</h3>
+                </div>
+
+                <div class="img-desc red">
+                    <img src="{% static 'img/red.png' %}" class="img-img">
+                    <h3 class="img-text">Detractors ({{ beeline_k }})</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12" style="background-color: white; border: 1px solid black;">
+            <div id="chartdiv2" style="width: 100%"></div>
+            <div class="gen-cont">
+                <img class="title-gen" src="{% static 'img/uzmob.png' %}">
+                <div class="img-desc green">
+                    <img src="{% static 'img/green.png' %}" class="img-img" >
+                    <h3 class="img-text">Promoters ({{ uzmobile_p }})</h3>
+                </div>
+
+                <div class="img-desc yellow">
+                    <img src="{% static 'img/yellow.png' %}" class="img-img">
+                    <h3 class="img-text">Passives ({{ uzmobile_n }})</h3>
+                </div>
+
+                <div class="img-desc red">
+                    <img src="{% static 'img/red.png' %}" class="img-img">
+                    <h3 class="img-text">Detractors ({{ uzmobile_k }})</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12" style="background-color: white; border: 1px solid black;">
+            <div id="chartdiv3" style="width: 100%"></div>
+            <div class="gen-cont">
+                <img class="title-gen mobz" src="{% static 'img/mobz.png' %}" >
+                <div class="img-desc green">
+                    <img src="{% static 'img/green.png' %}" class="img-img" >
+                    <h3 class="img-text">Promoters ({{ mobiuz_p }})</h3>
+                </div>
+
+                <div class="img-desc yellow">
+                    <img src="{% static 'img/yellow.png' %}" class="img-img">
+                    <h3 class="img-text">Passives ({{ mobiuz_n }})</h3>
+                </div>
+
+                <div class="img-desc red">
+                    <img src="{% static 'img/red.png' %}" class="img-img">
+                    <h3 class="img-text">Detractors ({{ mobiuz_k }})</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class = "row px-xl-5 align-items-centers justify-content-around pt-5 pb-5">
+        <div class="col-lg-9 col-md-11 col-sm-11 pb-1 col-12 ramka text-center">
+            <h1 class="desc-text">ИНДЕКС NPS МОБИЛЬНЫХ ОПЕРАТОРОВ</h1>
+            <canvas id="LineGraph" style="width: 100%;"></canvas>
+        </div>
+    </div>
+    <script>
+        var yValues = ["Сентябрь","Октяюрь","Ноябрь","Декабрь","Январь","Февраль", "Март"];
+
+        new Chart("LineGraph", {
+          type: "line",
+          data: {
+            labels: yValues,
+            datasets: [{
+              label: 'Uzmobile',
+              backgroundColor: "rgba(0, 0, 0,0)",
+              borderColor: "blue",
+              data: [48,47,40,40,48,52,Math.round(({{ uzmobile_nps }}[0]-{{ uzmobile_nps }}[2])/({{ uzmobile_nps }}[0] + {{ uzmobile_nps }}[1]+{{ uzmobile_nps }}[2]) * 100)]
+            },
+            {
+              label: 'Mobiuz',
+              backgroundColor: "rgba(0, 0, 0,0)",
+              borderColor: "red",
+              data: [37,50,44,44,42,35,Math.round(({{ mobiuz_nps }}[0]-{{ mobiuz_nps }}[2])/({{ mobiuz_nps }}[0] + {{ mobiuz_nps }}[1]+{{ mobiuz_nps }}[2]) * 100)]
+            },
+            {
+              label: 'Beeline',
+              backgroundColor: "rgba(0, 0, 0,0)",
+              borderColor: "yellow",
+              data: [44,45,43,41,42,40,Math.round(({{ beeline_nps }}[0]-{{ beeline_nps }}[2])/({{ beeline_nps }}[0] + {{ beeline_nps }}[1]+{{ beeline_nps }}[2]) * 100)]
+            },
+            {
+              label: 'Ucell',
+              backgroundColor: "rgba(0, 0, 0,0)",
+              borderColor: "violet",
+              data: [42,36,39,39,37,44,Math.round(({{ ucell_nps }}[0]-{{ ucell_nps }}[2])/({{ ucell_nps }}[0] + {{ ucell_nps }}[1]+{{ ucell_nps }}[2]) * 100)]
+            }]
+          },
+            options: {
+              plugins : {
+                  datalabels: {
+        color: 'black',
+          formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        font: {
+          size: 13
+        },
+        align: 'center'
+      },
+              },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                            min: Math.min(32,Math.round(({{ ucell_nps }}[0]-{{ ucell_nps }}[2])/({{ ucell_nps }}[0] + {{ ucell_nps }}[1]+{{ ucell_nps }}[2]) * 100),
+                            Math.round(({{ beeline_nps }}[0]-{{ beeline_nps }}[2])/({{ beeline_nps }}[0] + {{ beeline_nps }}[1]+{{ beeline_nps }}[2]) * 100),
+                            Math.round(({{ mobiuz_nps }}[0]-{{ mobiuz_nps }}[2])/({{ mobiuz_nps }}[0] + {{ mobiuz_nps }}[1]+{{ mobiuz_nps }}[2]) * 100),
+                            Math.round(({{ uzmobile_nps }}[0]-{{ uzmobile_nps }}[2])/({{ uzmobile_nps }}[0] + {{ uzmobile_nps }}[1]+{{ uzmobile_nps }}[2]) * 100))-2,
+                            max: Math.max(55,Math.round(({{ ucell_nps }}[0]-{{ ucell_nps }}[2])/({{ ucell_nps }}[0] + {{ ucell_nps }}[1]+{{ ucell_nps }}[2]) * 100),
+                            Math.round(({{ beeline_nps }}[0]-{{ beeline_nps }}[2])/({{ beeline_nps }}[0] + {{ beeline_nps }}[1]+{{ beeline_nps }}[2]) * 100),
+                            Math.round(({{ mobiuz_nps }}[0]-{{ mobiuz_nps }}[2])/({{ mobiuz_nps }}[0] + {{ mobiuz_nps }}[1]+{{ mobiuz_nps }}[2]) * 100),
+                            Math.round(({{ uzmobile_nps }}[0]-{{ uzmobile_nps }}[2])/({{ uzmobile_nps }}[0] + {{ uzmobile_nps }}[1]+{{ uzmobile_nps }}[2]) * 100))+2,
+                            display: false,
+                        },
+                        gridLines: {
+                            {#color: "rgba(0, 0, 0, 0)",#}
+                        }
+                    },],
+                    xAxes: [{
+                        gridLines: {
+                            {#color: "rgba(0, 0, 0, 0)",#}
+                        }
+                    },]
+                }
+            },
+        });
+    </script>
+    <section>
+
+{#            <img src="{% static 'img/ucell.png' %}" class="ucell-age">#}
+{#            <img src="{% static 'img/beeline.png' %}" class="beeline-age">#}
+{#            <img src="{% static 'img/uzmob.png' %}" class="uzmob-age">#}
+{#            <img src="{% static 'img/mobz.png' %}" class="mobiuz-age">#}
+           <div class="gener-indic row px-xl-5" style="gap: 1%">
+                <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12 ramka">
+                     <div class="age-box">
+                       <h2 class="region-title">ПОЛ АБОННЕТОВ</h2>
+                       <canvas id="SexGroup" height="330px"></canvas>
+                     </div>
+                </div>
+                <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12 ramka">
+                    <div class="age-box">
+                       <h2 class="region-title">ВОЗРАСТНЫЕ ГРУППЫ</h2>
+                       <canvas id="YearGroup" height="330px"></canvas>
+                    </div>
+                </div>
+
+               <div class="col-lg-6 col-md-8 col-sm-12 pb-1 col-12 ramka" >
+                  <h2 class="region-title">ТИП НАСЕЛЕННОГО ПУНКТА</h2>
+                 <canvas id="CityType" ></canvas>
+              </div>
+           </div>
+
+
+
+
+        <h2 class="desc-text">ЦЕЛИ ИСПОЛЬЗОВАНИЯ СИМ КАРТЫ</h2>
+        <div class="simka-pokaz row px-xl-5">
+{#             <img src="{% static 'img/ucell.png' %}" class="ucell-indic">#}
+{#            <img src="{% static 'img/beeline.png' %}" class="beeline-indic">#}
+{#            <img src="{% static 'img/uzmob.png' %}" class="uzmob-indic">#}
+{#            <img src="{% static 'img/mobz.png' %}" class="mobiuz-indic">#}
+
+
+            <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12 ramka">
+               <h2 class="region-title">ДЛЯ СВЯЗИ НА РАБОТЕ</h2>
+               <canvas id="Work" height="330px"></canvas>
+           </div>
+
+{#            <img src="{% static 'img/ucell.png' %}" class="ucell-indic1">#}
+{#            <img src="{% static 'img/beeline.png' %}" class="beeline-indic2">#}
+{#            <img src="{% static 'img/uzmob.png' %}" class="uzmob-indic3">#}
+{#            <img src="{% static 'img/mobz.png' %}" class="mobiuz-indic4">#}
+
+            <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12 ramka">
+               <h2 class="region-title">ДЛЯ ОБЩЕНИЯ (ЛИЧНЫЙ НОМЕР)</h2>
+               <canvas id="Conversations" height="330px"></canvas>
+            </div>
+
+{#            <img src="{% static 'img/ucell.png' %}" class="ucell-indic11">#}
+{#            <img src="{% static 'img/beeline.png' %}" class="beeline-indic22">#}
+{#            <img src="{% static 'img/uzmob.png' %}" class="uzmob-indic33">#}
+{#            <img src="{% static 'img/mobz.png' %}" class="mobiuz-indic44">#}
+            <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12 ramka">
+              <h2 class="region-title">ДЛЯ ЗВОНКОВ</h2>
+              <canvas id="Calls" height="330px"></canvas>
+            </div>
+
+
+{#             <img src="{% static 'img/ucell.png' %}" class="ucell-indic11-1">#}
+{#            <img src="{% static 'img/beeline.png' %}" class="beeline-indic22-2">#}
+{#            <img src="{% static 'img/uzmob.png' %}" class="uzmob-indic33-3">#}
+{#            <img src="{% static 'img/mobz.png' %}" class="mobiuz-indic44-4">#}
+
+
+            <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12 ramka">
+              <h2 class="region-title">ДЛЯ ИНТЕРНЕТА</h2>
+              <canvas id="Internet" height="330px"></canvas>
+            </div>
+        </div>
+
+        <div class="row px-xl-5 pt-2 simka-pokaz pb-5">
+{#            <img src="{% static 'img/ucell.png' %}" class="ucell-sim1">#}
+{#            <img src="{% static 'img/beeline.png' %}" class="beeline-sim1">#}
+{#            <img src="{% static 'img/uzmob.png' %}" class="uzmob-sim1">#}
+{#            <img src="{% static 'img/mobz.png' %}" class="mobiuz-sim1 ">#}
+
+            <div class="col-lg-3 col-md-5 col-sm-5 pb-1 col-12 ramka" >
+              <h2 class="region-title">КОЛИЧЕСТВО СИМ-КАРТ</h2>
+              <canvas id="NumberOfSims" height="330px"></canvas>
+            </div>
+
+{#             <img src="{% static 'img/ucell.png' %}" class="ucell-sim2">#}
+{#            <img src="{% static 'img/beeline.png' %}" class="beeline-sim2">#}
+{#            <img src="{% static 'img/uzmob.png' %}" class="uzmob-sim2">#}
+{#            <img src="{% static 'img/mobz.png' %}" class="mobiuz-sim2 ">#}
+
+            <div class="col-lg-6 col-md-8 col-sm-12 pb-1 col-12 ramka period-is" >
+                 <h2 class="region-title">ПЕРИОД ИСПОЛЬЗОВАНИЯ СИМ-КАРТ</h2>
+               <canvas id="period" width="330px"></canvas>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    <img src="{% static 'img/logo-mamc.png' %}" class="footer-img">
+    <div class="footer-container ">
+{#       <img src="{% static 'img/logo-mamc.png' %}" class="footer-img">#}
+      <div class="footer-box row px-xl-5 ">
+        <div class=" col-lg-2 col-md-5 col-sm-5 pb-1 col-12 w-25  ">
+            <p class="footer-desc">Задавайте вопросы</p>
+           <p class="footer-text">+7 (727) 225-28-60</p>
+            <p class="footer-text">+7 (727) 225-28-60</p>
+            <p class="footer-text">+998 55 900 05 41</p>
+       </div>
+
+        <div class=" col-lg-1 col-md-5 col-sm-5 pb-1 col-12 w-25 ">
+            <p class="footer-desc">Связаться с нами</p>
+           <p class="footer-text">info@mamcresearch.com</p>
+            <p  class="footer-text">b.selikhanov@mamcresearch.com</p>
+            <p   class="footer-text">WhatsApp / Telegram +7 747 459 81 80</p>
+       </div>
+      </div>
+        <p class="copy-text">Copyright MAMC Research, 2022</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@1.0.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script>
+    Chart.register(ChartjsPluginStacked100.default);
+    Chart.register(ChartDataLabels)
+    // setup
+    const data = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        label: 'Мужчины',
+        data: {{ mens }},
+        backgroundColor: [
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+        ],
+        borderColor: [
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+        ],
+        borderWidth: 1,
+         barThickness: 35
+
+      },{
+        label: 'Женщины',
+        data: {{ womans }},
+          backgroundColor: [
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+        ],
+        borderColor: [
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      }]
+    };
+
+    // config
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+          plugins: {
+      datalabels: {
+        color: 'black',
+          formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        font: {
+          size: 12
+        },
+        align: 'center'
+      }
+    },
+        scales: {
+          y: {
+              stacked: true,
+                ticks: {
+                    display: false,
+                },
+              grid: {
+                    display: false
+                }
+            },
+          x: {
+              stacked: true,
+              barThickness: 35,
+              grid: {
+                    display: false
+                }
+          },
+        }
+      },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('SexGroup'),
+      config
+    );
+
+    // Instantly assign Chart.js version
+    const chartVersion = document.getElementById('chartVersion');
+    chartVersion.innerText = Chart.version;
+    </script>
+<script>
+    const data8 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        label: 'до 3 мес',
+        data: {{ month3 }},
+        backgroundColor: [
+          'rgba(192,192,192,0.7)',
+          'rgba(192,192,192,0.7)',
+          'rgba(192,192,192,0.7)',
+          'rgba(192,192,192,0.7)',
+        ],
+         barThickness: 30
+      },{
+        label: 'Пол года',
+        data: {{ month6 }},
+        backgroundColor: [
+          'rgba(239, 207, 227, 1)',
+          'rgba(239, 207, 227, 1)',
+          'rgba(239, 207, 227, 1)',
+          'rgba(239, 207, 227, 1)',
+        ],
+         barThickness: 30
+      },{
+        label: 'До 1 года',
+        data: {{ month12 }},
+        backgroundColor: [
+          'rgba(144, 198, 149,1)',
+          'rgba(144, 198, 149,1)',
+          'rgba(144, 198, 149,1)',
+          'rgba(144, 198, 149,1)',
+        ],
+         barThickness: 30
+      },{
+        label: 'От 1 до 3 лет',
+        data: {{ month36 }},
+        backgroundColor: [
+          'rgba(165, 55, 253,1)',
+          'rgba(165, 55, 253,1)',
+          'rgba(165, 55, 253,1)',
+          'rgba(165, 55, 253,1)',
+        ],
+         barThickness: 30
+      },{
+        label: 'От 3 до 5 лет',
+        data: {{ month60 }},
+        backgroundColor: [
+          'rgb(137, 196, 244, 1)',
+          'rgb(137, 196, 244, 1)',
+          'rgb(137, 196, 244, 1)',
+          'rgb(137, 196, 244, 1)',
+        ],
+         barThickness: 30
+      },{
+        label: 'От 5 до 10 лет',
+        data: {{ month120 }},
+        backgroundColor: [
+          'rgb(0, 107, 0, 0.7)',
+          'rgb(0, 107, 0, 0.7)',
+          'rgb(0, 107, 0, 0.7)',
+          'rgb(0, 107, 0, 0.7)',
+        ],
+         barThickness: 30
+      }]
+    };
+
+    // config
+    const config8 = {
+      type: 'bar',
+      data: data8,
+      options: {
+      indexAxis: 'y',
+        plugins: {
+          datalabels: {
+        color: 'black',
+          formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        font: {
+          size: 11
+        },
+        align: 'center'
+      },
+          stacked100: {
+              enable: true,
+          },
+        },
+        scales: {
+            y: {
+                ticks: {
+                    display: false
+                },
+                grid: {
+                    display: false
+                }
+            },
+            x:{
+                grid: {
+                    display: false
+                }
+            }
+        }
+      },
+    };
+
+    // render init block
+    const myChart8 = new Chart(
+      document.getElementById('period'),
+      config8
+    );
+    </script>
+    <script>
+    const data7 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        label: '1 Сим',
+        data: {{ sim1 }},
+        backgroundColor: [
+          'rgba(137, 196, 244,1)',
+          'rgba(137, 196, 244,1)',
+          'rgba(137, 196, 244,1)',
+          'rgba(137, 196, 244,1)',
+        ],
+        borderWidth: 1,
+         barThickness: 30
+      },{
+        label: '2 Сим',
+        data: {{ sim2 }},
+        backgroundColor: [
+          'rgba(144, 198, 149,1)',
+          'rgba(144, 198, 149,1)',
+          'rgba(144, 198, 149,1)',
+          'rgba(144, 198, 149,1)',
+        ],
+        borderWidth: 1,
+         barThickness: 30
+      }]
+    };
+
+    // config
+    const config7 = {
+      type: 'bar',
+      data: data7,
+      options: {
+        plugins: {
+            datalabels: {
+        color: 'black',
+          formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        font: {
+          size: 11
+        },
+        align: 'center'
+      },
+          stacked100: {
+              enable: true,
+          }
+        },
+        scales: {
+          y: {
+                ticks: {
+                    display: false
+                },
+              grid: {
+                    display: false
+                }
+            },
+            x:{
+              grid: {
+                    display: false
+                }
+            }
+        }
+      },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart7 = new Chart(
+      document.getElementById('NumberOfSims'),
+      config7
+    );
+    </script>
+<script>
+    console.log({{ y35_44 }})
+    const data1 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        label: '16-19',
+        data: {{ y16_19 }},
+        backgroundColor: [
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: '20-24',
+        data: {{ y20_24 }},
+        backgroundColor: [
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: '25-34',
+        data: {{ y25_34 }},
+        backgroundColor: [
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: '35-44',
+        data: {{ y35_44 }},
+        backgroundColor: [
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: '45-54',
+        data: {{ y45_54 }},
+        backgroundColor: [
+          'rgba(191, 191, 191,1)',
+          'rgba(191, 191, 191,1)',
+          'rgba(191, 191, 191,1)',
+          'rgba(191, 191, 191,1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: '55+',
+        data: {{ y55 }},
+        backgroundColor: [
+          'rgba(137, 196, 244,1)',
+          'rgba(137, 196, 244,1)',
+          'rgba(137, 196, 244,1)',
+          'rgba(137, 196, 244,1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      }]
+    };
+
+    // config
+    const config1 = {
+      type: 'bar',
+      data: data1,
+      options: {
+        plugins: {
+            datalabels: {
+        color: 'black',
+          formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        font: {
+          size: 10
+        },
+        align: 'center'
+      },
+          stacked100: {
+              enable: true,
+          }
+        },
+        scales: {
+          y: {
+                ticks: {
+                    display: false
+                },
+              grid: {
+                    display: false
+                }
+            },
+            x:{
+              grid: {
+                    display: false
+                }
+            }
+        }
+      },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart1 = new Chart(
+      document.getElementById('YearGroup'),
+      config1
+    );
+    </script>
+<script>
+    const data2 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        label: 'Областной центр',
+        data: {{ center }},
+        backgroundColor: [
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+          'rgba(90, 34, 139,0.7)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: 'Город',
+        data: {{ city }},
+        backgroundColor: [
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+        ],
+        borderColor: [
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+          'rgba(239, 207, 227,1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: 'ПГТ',
+        data: {{ pgt }},
+        backgroundColor: [
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+        ],
+        borderColor: [
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+          'rgba(102, 204, 153, 1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      },{
+        label: 'Село',
+        data: {{ village }},
+        backgroundColor: [
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+        ],
+        borderColor: [
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+          'rgba(227, 61, 148, 1)',
+        ],
+        borderWidth: 1,
+       barThickness: 35
+      }]
+    };
+
+    // config
+    const config2 = {
+      type: 'bar',
+      data: data2,
+      options: {
+        indexAxis: 'y',
+        plugins: {
+            datalabels: {
+        color: 'black',
+          formatter: function (value) {
+          return Math.round(value) + '%';
+        },
+        font: {
+          size: 12
+        },
+        align: 'center'
+      },
+          stacked100: {
+              enable: true,
+          }
+        },
+        scales: {
+            y: {
+                grid: {
+                    display: false
+                }
+            },
+            x: {
+                ticks: {
+                    display: false
+                },
+                grid: {
+                    display: false
+                }
+            }
+        },
+    },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart2 = new Chart(
+      document.getElementById('CityType'),
+      config2
+    );
+    </script>
+<script>
+    const data3 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        data: {{ work }},
+          backgroundColor : [
+            'rgba(90, 34, 139,0.5)',
+          'rgb(255, 252, 127,0.5)',
+          'rgb(255, 33, 38,0.5)',
+          'rgb(44, 130, 201,0.5)',
+          ],
+        borderColor: [
+          'rgb(90, 34, 139)',
+          'rgb(255, 252, 127)',
+          'rgb(255, 33, 38)',
+          'rgb(44, 130, 201)',
+        ],
+          borderWidth: 1,
+         barThickness: 35},
+      ],
+    };
+
+    // config
+    const config3 = {
+      type: 'bar',
+      data: data3,
+      options: {
+          plugins: {
+              datalabels: {
+        color: 'black',
+        font: {
+          size: 12
+        },
+        align: 'center'
+      },
+    legend: {
+      display: false
+    }
+  },
+        scales: {
+          y: {
+                ticks: {
+                    display: false
+                },
+              grid: {
+                    display: false
+                }
+            },
+            x:{
+              grid: {
+                    display: false
+                }
+            }
+        }
+      },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart3 = new Chart(
+      document.getElementById('Work'),
+      config3
+    );
+    </script>
+<script>
+    const data4 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        data: {{ conversations }},
+        backgroundColor : [
+            'rgba(90, 34, 139,0.5)',
+          'rgb(255, 252, 127,0.5)',
+          'rgb(255, 33, 38,0.5)',
+          'rgb(44, 130, 201,0.5)',
+          ],
+        borderColor: [
+          'rgb(90, 34, 139)',
+          'rgb(255, 252, 127)',
+          'rgb(255, 33, 38)',
+          'rgb(44, 130, 201)',
+        ],
+          borderWidth: 1,
+         barThickness: 35},],
+    };
+
+    // config
+    const config4 = {
+      type: 'bar',
+      data: data4,
+      options: {
+          plugins: {
+              datalabels: {
+        color: 'black',
+        font: {
+          size: 12
+        },
+        align: 'center'
+      },
+    legend: {
+      display: false
+    }
+  },
+        scales: {
+         y: {
+                ticks: {
+                    display: false
+                },
+             grid: {
+                    display: false
+                }
+            },
+            x:{
+             grid: {
+                    display: false
+                }
+            }
+        }
+      },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart4 = new Chart(
+      document.getElementById('Conversations'),
+      config4
+    );
+    </script>
+<script>
+    const data5 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        data: {{ calls }},
+        backgroundColor : [
+            'rgba(90, 34, 139,0.5)',
+          'rgb(255, 252, 127,0.5)',
+          'rgb(255, 33, 38,0.5)',
+          'rgb(44, 130, 201,0.5)',
+          ],
+        borderColor: [
+          'rgb(90, 34, 139)',
+          'rgb(255, 252, 127)',
+          'rgb(255, 33, 38)',
+          'rgb(44, 130, 201)',
+        ],
+          borderWidth: 1,
+         barThickness: 35},],
+    };
+
+    // config
+    const config5 = {
+      type: 'bar',
+      data: data5,
+      options: {
+          plugins: {
+              datalabels: {
+        color: 'black',
+        font: {
+          size: 12
+        },
+        align: 'center'
+      },
+
+    legend: {
+      display: false
+    }
+  },
+        scales: {
+          y: {
+                ticks: {
+                    display: false
+                },
+              grid: {
+                    display: false
+                }
+            },
+            x:{
+              grid: {
+                    display: false
+                }
+            }
+        }
+      },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart5 = new Chart(
+      document.getElementById('Calls'),
+      config5
+    );
+    </script>
+<script>
+    const data6 = {
+      labels: ['Ucell', 'Beeline', 'Uzmobile', 'MobiUz'],
+      datasets: [{
+        data: {{ internet }},
+        backgroundColor : [
+            'rgba(90, 34, 139,0.5)',
+          'rgb(255, 252, 127,0.5)',
+          'rgb(255, 33, 38,0.5)',
+          'rgb(44, 130, 201,0.5)',
+          ],
+        borderColor: [
+          'rgb(90, 34, 139)',
+          'rgb(255, 252, 127)',
+          'rgb(255, 33, 38)',
+          'rgb(44, 130, 201)',
+        ],
+          borderWidth: 1,
+         barThickness: 35},],
+    };
+
+    // config
+    const config6 = {
+      type: 'bar',
+      data: data6,
+      options: {
+          plugins: {
+              datalabels: {
+        color: 'black',
+        font: {
+          size: 12
+        },
+        align: 'center'
+      },
+    legend: {
+      display: false
+    }
+  },
+        scales: {
+          y: {
+                ticks: {
+                    display: false
+                },
+              grid: {
+                    display: false
+                }
+            },
+            x:{
+              grid: {
+                    display: false
+                }
+            }
+        }
+      },
+      plugins:[ChartDataLabels],
+    };
+
+    // render init block
+    const myChart6 = new Chart(
+      document.getElementById('Internet'),
+      config6
+    );
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+</body>
+</html>

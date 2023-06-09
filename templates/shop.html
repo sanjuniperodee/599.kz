@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+<title>Shop</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="OneTech shop project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style4.css'%}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="{% static 'plugins/fontawesome-free-5.0.1/css/fontawesome-all.css'%}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/jquery-ui-1.12.1.custom/jquery-ui.css'%}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/shop_responsive.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/slick-1.8.0/slick.css'%}">
+<style>
+        #img-c{
+            display: flex;
+            height: 230px;
+            line-height: 230px;
+        }
+        .img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+        @media screen  and (max-width: 760px) {
+            #img-c{
+                height: 160px;
+                line-height: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="super_container">
+{% include 'navbar.html' %}
+<div class="shop">
+<div class="container">
+<div class="row">
+<div class="col-lg-3">
+
+<div class="shop_sidebar">
+<div class="sidebar_section">
+<div class="sidebar_title">Categories</div>
+<ul class="sidebar_categories">
+    {% for sub in category.subcategories.all %}
+<li><a href="{% url 'core:shop' category.title sub.title %}">{{ sub.title }}</a></li>
+    {% endfor %}
+</ul>
+</div>
+<div class="sidebar_section filter_by_section">
+<div class="sidebar_title">Filter By</div>
+<div class="sidebar_subtitle">Price</div>
+<div class="filter_price">
+<div id="slider-range" class="slider_range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"><div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 58%;"></div><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span><span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 58%;"></span></div>
+<p>Range: </p>
+<p><input type="text" id="amount" class="amount" readonly="" style="border:0; font-weight:bold;"></p>
+</div>
+</div>
+<div class="sidebar_section">
+<div class="sidebar_subtitle color_subtitle">Color</div>
+<ul class="colors_list">
+<li class="color"><a href="#" style="background: #b19c83;"></a></li>
+<li class="color"><a href="#" style="background: #000000;"></a></li>
+<li class="color"><a href="#" style="background: #999999;"></a></li>
+<li class="color"><a href="#" style="background: #0e8ce4;"></a></li>
+<li class="color"><a href="#" style="background: #df3b3b;"></a></li>
+<li class="color"><a href="#" style="background: #ffffff; border: solid 1px #e1e1e1;"></a></li>
+</ul>
+</div>
+<div class="sidebar_section">
+<div class="sidebar_subtitle brands_subtitle">Brands</div>
+<ul class="brands_list">
+<li class="brand"><a href="#">Apple</a></li>
+<li class="brand"><a href="#">Beoplay</a></li>
+<li class="brand"><a href="#">Google</a></li>
+<li class="brand"><a href="#">Meizu</a></li>
+<li class="brand"><a href="#">OnePlus</a></li>
+<li class="brand"><a href="#">Samsung</a></li>
+<li class="brand"><a href="#">Sony</a></li>
+<li class="brand"><a href="#">Xiaomi</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-lg-9">
+
+<div class="shop_content">
+<div class="shop_bar clearfix">
+<div class="shop_product_count"><span>{{ object_list.length }}</span> products found</div>
+<div class="shop_sorting">
+<span>Sort by:</span>
+<ul>
+<li>
+<span class="sorting_text">highest rated<i class="fas fa-chevron-down"></i></span>
+<ul>
+<li class="shop_sorting_button" data-isotope-option="{ &quot;sortBy&quot;: &quot;original-order&quot; }">highest rated</li>
+<li class="shop_sorting_button" data-isotope-option="{ &quot;sortBy&quot;: &quot;name&quot; }">name</li>
+<li class="shop_sorting_button" data-isotope-option="{ &quot;sortBy&quot;: &quot;price&quot; }">price</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="product_grid" style="position: relative;">
+<div class="product_grid_border"></div>
+<div class="container-fluid mt-3">
+<div class="row">
+{% for item in object_list %}
+<div class="col-lg-3 col-md-4 col-sm-6 pb-1 col-6">
+<div class="product-item bg-light pb-4">
+<div class="product-img position-relative overflow-hidden justify-content-around" id="img-c">
+<a href="{{ item.get_absolute_url }}">
+<img class="img" src="{{ item.image.url }}" alt="">
+</a>
+</div>
+<div class="text-center pt-2" style="word-break: break-word;">
+<a class="text-decoration-none" href="{{ item.get_absolute_url }}"><p style="color: black; min-height: 36px; max-height: 36px; font-size: 12px">{{ item.title }}</p></a>
+
+<div class="d-flex align-items-center justify-content-center mt-1">
+<p style="font-size: 12px;color: black">{{ item.get_price }}₸</p>
+</div>
+</div>
+<div class="d-flex align-items-center justify-content-center">
+<input type="hidden" value="{{ item.slug }}" id="slug" name="slug" class='slug'>
+<button style="border-radius: 15px; font-size: 12px" name = "{{ item.title }}" class="btn btn-outline-dark" id="add_to_card"  value="{{ item.slug }}" type="button"><i class="fa fa-shopping-cart"></i></button>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+ <div class="col-12">
+                        {% if object_list.has_other_pages %}
+                          <nav class="d-flex justify-content-center wow fadeIn">
+                            <ul class="pagination pg-blue">
+                              {% if object_list.has_previous %}
+                              <li class="page-item">
+
+                                <a class="page-link" href="?page={{ object_list.previous_page_number }}" aria-label="Previous">
+                                  <span aria-hidden="true">&laquo;</span>
+                                  <span class="sr-only">Previous</span>
+                                </a>
+                              </li>
+                              {% endif %}
+
+                              <li class="page-item active">
+                                <a class="page-link" href="?page={{ object_list.number }}">{{ object_list.number }}
+                                  <span class="sr-only">(current)</span>
+                                </a>
+                              </li>
+
+                              {% if object_list.has_next %}
+                              <li class="page-item">
+                                <a class="page-link" href="?page={{ object_list.next_page_number }}" aria-label="Next">
+                                  <span aria-hidden="true">&raquo;</span>
+                                  <span class="sr-only">Next</span>
+                                </a>
+                              </li>
+                              {% endif %}
+                            </ul>
+                          </nav>
+                          {% endif %}
+                    </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="viewed">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="viewed_title_container">
+<h3 class="viewed_title">Recently Viewed</h3>
+<div class="viewed_nav_container">
+<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
+<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
+</div>
+</div>
+<div class="viewed_slider_container">
+
+<div class="owl-carousel owl-theme viewed_slider owl-loaded owl-drag">
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1365px, 0px, 0px); transition: all 0.25s ease 0s; width: 3510px;"><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_1.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Beoplay H7</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_2.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_3.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225</div>
+<div class="viewed_name"><a href="#">Samsung J730F...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_4.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_5.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_6.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$375</div>
+<div class="viewed_name"><a href="#">Speedlink...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_1.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Beoplay H7</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item active" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_2.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item active" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_3.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225</div>
+<div class="viewed_name"><a href="#">Samsung J730F...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item active" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_4.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item active" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_5.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item active" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_6.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$375</div>
+<div class="viewed_name"><a href="#">Speedlink...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned active" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_1.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Beoplay H7</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_2.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_3.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225</div>
+<div class="viewed_name"><a href="#">Samsung J730F...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_4.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$379</div>
+<div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_5.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$225<span>$300</span></div>
+<div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div><div class="owl-item cloned" style="width: 165px; margin-right: 30px;"><div class="owl-item">
+<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+<div class="viewed_image"><img src="images/view_6.jpg" alt=""></div>
+<div class="viewed_content text-center">
+<div class="viewed_price">$375</div>
+<div class="viewed_name"><a href="#">Speedlink...</a></div>
+</div>
+<ul class="item_marks">
+<li class="item_mark item_discount">-25%</li>
+<li class="item_mark item_new">new</li>
+</ul>
+</div>
+</div></div></div></div><div class="owl-nav disabled"><div class="owl-prev">prev</div><div class="owl-next">next</div></div><div class="owl-dots disabled"></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="brands">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="brands_slider_container">
+
+<div class="owl-carousel owl-theme brands_slider owl-loaded owl-drag">
+
+
+
+
+
+
+
+
+<div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1246px, 0px, 0px); transition: all 0.25s ease 0s; width: 2952px;"><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_1.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_2.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_3.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_4.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_5.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_6.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_7.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_8.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_1.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_2.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_3.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_4.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_5.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_6.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_7.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_8.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_1.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_2.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned active" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_3.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_4.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_5.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_6.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_7.jpg" alt="" style="opacity: 1;"></div></div></div><div class="owl-item cloned" style="width: auto; margin-right: 42px;"><div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="https://preview.colorlib.com/theme/onetech/images/brands_8.jpg" alt="" style="opacity: 1;"></div></div></div></div></div><div class="owl-nav disabled"><div class="owl-prev">prev</div><div class="owl-next">next</div></div><div class="owl-dots disabled"></div></div>
+
+<div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
+<div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="newsletter">
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
+<div class="newsletter_title_container">
+<div class="newsletter_icon"><img src="images/send.png" alt=""></div>
+<div class="newsletter_title">Sign up for Newsletter</div>
+<div class="newsletter_text"><p>...and receive %20 coupon for first shopping.</p></div>
+</div>
+<div class="newsletter_content clearfix">
+<form action="#" class="newsletter_form">
+<input type="email" class="newsletter_input" required="required" placeholder="Enter your email address">
+<button class="newsletter_button">Subscribe</button>
+</form>
+<div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    {% include 'footer.html' %}
+</div>
+<script src="{% static 'js/jquery-3.3.1.min.js'%}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js'%}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js'%}"></script>
+<script src="{% static 'plugins/greensock/TweenMax.min.js'%}"></script>
+<script src="{% static 'plugins/greensock/TimelineMax.min.js'%}"></script>
+<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js'%}"></script>
+<script src="{% static 'plugins/greensock/animation.gsap.min.js'%}"></script>
+<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js'%}"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="js/shop_custom.js"></script>
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23581568-13');
+</script>
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816" integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw==" data-cf-beacon="{&quot;rayId&quot;:&quot;7cd59fd27d2a95df&quot;,&quot;token&quot;:&quot;cd0b4b3a733644fc843ef0b185f98241&quot;,&quot;version&quot;:&quot;2023.4.0&quot;,&quot;si&quot;:100}" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    const buttons = document.querySelectorAll('button[type="button"]');
+    {#console.log(buttons)#}
+    for(let i = 0; i < buttons.length ; i++) {
+        if(buttons[i].id == 'add_to_card'){
+            console.log(buttons[i]['value'])
+            buttons[i].addEventListener('click',function(e){
+                e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'{% url "core:add-to-cart1" %}',
+                    data:
+                    {
+                        slug:buttons[i]['value'],
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    dataType:'json',
+                    success:function(){
+                        alert("Добавлено в корзину " + buttons[i]['name']);
+                    }
+                })
+            });
+        }
+    }
+</script>
+</body>
+
+</html>

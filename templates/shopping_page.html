@@ -1,0 +1,308 @@
+{% load static %}
+{% load cart_template_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Proplex.kz</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="icon" type="image/png" href="{% static 'img/proplex_logo.png' %}">
+    <script src="{% static 'js/jquery-3.5.1.js' %}" ></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/style4.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/newstyle.css' %}">
+    <style>
+        #img-c{
+            display: flex;
+            height: 230px;
+            line-height: 230px;
+        }
+        .img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .overlay {
+          /* Height & width depends on how you want to reveal the overlay (see JS below) */
+          height: 100%;
+          width: 0;
+          position: fixed; /* Stay in place */
+          margin-top: 180px;
+          z-index: 1; /* Sit on top */
+          left: 0;
+          top: 0;
+          background-color: rgb(0,0,0); /* Black fallback color */
+          background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+          overflow-x: hidden; /* Disable horizontal scroll */
+          transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+        }
+
+        /* Position the content inside the overlay */
+        .overlay-content {
+          {#position: relative;#}
+          top: 25%; /* 25% from the top */
+          width: 100%; /* 100% width */
+          text-align: center; /* Centered text/links */
+          margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+        }
+
+        /* The navigation links inside the overlay */
+        .overlay a {
+          padding: 8px;
+          text-decoration: none;
+          font-size: 36px;
+          color: #818181;
+          display: block; /* Display block instead of inline */
+          transition: 0.3s; /* Transition effects on hover (color) */
+        }
+
+        /* When you mouse over the navigation links, change their color */
+        .overlay a:hover, .overlay a:focus {
+          color: #f1f1f1;
+        }
+
+        /* Position the close button (top right corner) */
+        .overlay .closebtn {
+          position: absolute;
+          top: 20px;
+          right: 45px;
+          font-size: 60px;
+        }
+        /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+        @media screen  and (max-width: 760px) {
+            #img-c{
+                height: 160px;
+                line-height: 160px;
+            }
+          .overlay a {font-size: 20px}
+          .overlay .closebtn {
+            font-size: 40px;
+            top: 15px;
+            right: 35px;
+          }
+        }
+    </style>
+</head>
+
+<body>
+{% include "navbar.html" %}
+{#{% include "carousel.html" %}#}
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-12">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="{% url 'core:home' %}">В Начало</a>
+                    <a class="breadcrumb-item text-dark" href="{% url 'core:home1' str 'all' 'block' '10'%}">{{str}}</a>
+                    {% if str1 != 'all' %}
+                        <span class="breadcrumb-item active">{{ str1 }}</span>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
+    <!-- Shop Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-4">
+                <!-- Brand Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3 d-none d-lg-block"><span class="bg-secondary pr-3">Выберите бренд</span></h5>
+                <div class="bg-light p-4 mb-30 d-none d-lg-block">
+                    <form method="POST">
+                        {% for brand in brands %}
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                        <div style="align-items: center">
+                            <input type="checkbox" id="scales" name="scales" value="{{ brand.title }}" {% if brand.title in brandy %}
+                                                    checked
+                                                {% endif %}>
+                            <label>{{ brand.title }}</label>
+                        </div>
+{#                            <span class="badge border font-weight-normal">1000</span>#}
+                        </div>
+                        {% endfor %}
+                        <button  type="submit" id="buttonsubmit1"  style="width: 150px; color: #fff; background: #2f2f2f; border-radius: 20px; text-align: center; border: none; font-size: 15px; padding: 3px">
+                            Применить
+                        </button>
+                    </form>
+                </div>
+            <div id="myNav" class="overlay mt-5">
+
+              <!-- Button to close the overlay navigation -->
+              <a href="javascript:void(0)" class="closebtn" style="margin-top: 95px" onclick="closeNav()">&times;</a>
+
+              <!-- Overlay content -->
+              <div class="overlay-content">
+                    <div class="bg-light p-4 mb-30">
+                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Выберите бренд</span></h5>
+                        <form method="POST">
+                            {% for brand in brands %}
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <div style="align-items: center">
+                                <input type="checkbox" id="scales" name="scales" value="{{ brand.title }}" {% if brand.title in brandy %}
+                                                        checked
+                                                    {% endif %}>
+                                <label>{{ brand.title }}</label>
+                            </div>
+                            </div>
+                            {% endfor %}
+                            <button  type="submit" id="buttonsubmit"   style="width: 150px; color: #fff; background: #2f2f2f; border-radius: 20px; text-align: center; border: none; font-size: 15px; padding: 3px">
+                                Применить
+                            </button>
+                        </form>
+                    </div>
+              </div>
+
+            </div>
+            <span onclick="openNav()"><a style="border-radius: 15px; width: 100%; margin-bottom: 20px"class="btn btn-outline-dark float-right d-md-none"> Фильтры</a></span>
+                <!-- Brand End -->
+            </div>
+            <!-- Shop Sidebar End -->
+
+
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-8 col-12">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div>
+                                <a href="{% url 'core:home1' str str1 str2 '10'%}" class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></a>
+                                <a href="{% url 'core:home1' str str1 'row' '10'%}"class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></a>
+                            </div>
+                            <div class="ml-2">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Сортировать</button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="{% url 'core:home1' str 'price_up' 'block' '10'%}">По цене вверх</a>
+                                        <a class="dropdown-item" href="{% url 'core:home1' str 'price_down' 'block' '10'%}">По цене вниз </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for item in object_list %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1 col-6">
+                        <div class="product-item bg-light mb-4">
+                            <div class="product-img position-relative overflow-hidden justify-content-around" id="img-c">
+                                <a href="{{ item.get_absolute_url }}">
+                                    <img class="img" src="{{ item.image.url }}" alt="">
+                                </a>
+                            </div>
+                            <div class="text-center pt-2" style="word-break: break-word;">
+                                <a class="text-decoration-none" href="{{ item.get_absolute_url }}"><p style="color: black; min-height: 36px; max-height: 36px; font-size: 12px">{{ item.title }}</p></a>
+
+                                <div class="d-flex align-items-center justify-content-center mt-1">
+                                    <p style="font-size: 12px;color: black">{{ item.get_price }}₸</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <input type="hidden" value="{{ item.slug }}" id="slug" name="slug" class='slug'>
+                                <button style="border-radius: 15px; font-size: 12px" name = "{{ item.title }}" class="btn btn-outline-dark" id="add_to_card"  value="{{ item.slug }}" type="button"><i class="fa fa-shopping-cart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+{#                    <div class="col-12">#}
+{#                        {% if object_list.has_other_pages %}#}
+{#                          <nav class="d-flex justify-content-center wow fadeIn">#}
+{#                            <ul class="pagination pg-blue">#}
+{#                              {% if object_list.has_previous %}#}
+{#                              <li class="page-item">#}
+{##}
+{#                                <a class="page-link" href="?page={{ object_list.previous_page_number }}" aria-label="Previous">#}
+{#                                  <span aria-hidden="true">&laquo;</span>#}
+{#                                  <span class="sr-only">Previous</span>#}
+{#                                </a>#}
+{#                              </li>#}
+{#                              {% endif %}#}
+{##}
+{#                              <li class="page-item active">#}
+{#                                <a class="page-link" href="?page={{ object_list.number }}">{{ object_list.number }}#}
+{#                                  <span class="sr-only">(current)</span>#}
+{#                                </a>#}
+{#                              </li>#}
+{##}
+{#                              {% if object_list.has_next %}#}
+{#                              <li class="page-item">#}
+{#                                <a class="page-link" href="?page={{ object_list.next_page_number }}" aria-label="Next">#}
+{#                                  <span aria-hidden="true">&raquo;</span>#}
+{#                                  <span class="sr-only">Next</span>#}
+{#                                </a>#}
+{#                              </li>#}
+{#                              {% endif %}#}
+{#                            </ul>#}
+{#                          </nav>#}
+{#                          {% endif %}#}
+{#                    </div>#}
+                </div>
+            </div>
+
+            <!-- Shop Product End -->
+        </div>
+    </div>
+
+    <!-- Shop End -->
+    <!-- Products End -->
+    {% include "footer.html" %}
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    let checkboxes = $("input[type=checkbox][name=scales]")
+    let enabledSettings = [];
+
+    checkboxes.change(function() {
+      enabledSettings = checkboxes
+        .filter(":checked")
+        .map(function() {
+            $.ajax({
+                success: function () {
+                    maxwidth = document.documentElement.clientWidth;
+                    if(parseInt(maxwidth) > 900){
+                        document.getElementById("buttonsubmit1").click();
+                    }
+                }
+            });
+        })
+        .get()
+
+      console.log(enabledSettings);
+    });
+</script>
+    <script type="text/javascript">
+    const buttons = document.querySelectorAll('button[type="button"]');
+    {#console.log(buttons)#}
+    for(let i = 1; i < buttons.length ; i++) {
+        if(buttons[i].id == 'add_to_card'){
+            console.log(buttons[i]['value'])
+            buttons[i].addEventListener('click',function(e){
+                e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'{% url "core:add-to-cart1" %}',
+                    data:
+                    {
+                        slug:buttons[i]['value'],
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    dataType:'json',
+                    success:function(){
+                        alert("Добавлено в корзину " + buttons[i]['name']);
+                    }
+                })
+            });
+        }
+    }
+</script>
+<script type="text/javascript">
+    function openNav() {
+        document.getElementById("myNav").style.paddingTop = "80px";
+        document.getElementById("myNav").style.width = "100%";
+    }
+    function closeNav() {
+        {#document.getElementById("myNav").style.paddingTop = "80px";#}
+        document.getElementById("myNav").style.width = "0%";
+    }
+</script>
+
+</html>

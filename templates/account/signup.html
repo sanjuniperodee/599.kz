@@ -1,0 +1,50 @@
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load static %}
+{% load cart_template_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ybeauty.kz</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static  'css/style4.css'%}" rel="stylesheet">
+</head>
+<body>
+{% include "navbar.html" %}
+<div class="container">
+  <section class="mb-4">
+    <div class="row wow fadeIn">
+      <div class='col-6 offset-3'>
+        <h1>{% trans "Sign Up" %}</h1>
+        <p>{% blocktrans %}Если у вас уже есть аккаунт, можете <a href="{{ login_url }}">войти</a>.{% endblocktrans %}</p>
+        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button class='btn btn-primary' type="submit">{% trans "Sign Up" %} &raquo;</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+{% include "footer.html" %}
+</body>

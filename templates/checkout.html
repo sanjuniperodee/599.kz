@@ -1,0 +1,92 @@
+{% load crispy_forms_tags %}
+{% load static %}
+{% load cart_template_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Proplex.kz</title>
+    <link rel="icon" type="image/png" href="{% static 'img/proplex_logo.png' %}">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <script src="{% static 'js/jquery-3.5.1.js' %}" ></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/style4.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/newstyle.css' %}">
+</head>
+<body>
+    {% include "navbar.html" %}
+    <div class="container wow fadeIn">
+      <h2 class="my-5 h2 text-center">Форма заказа</h2>
+      <div class="row">
+        <div class="col-md-8 mb-4">
+          <div class="card">
+            <form method="POST" class="card-body">
+              {% csrf_token %}
+
+              <h3>Адресс доставки</h3>
+
+              <div class='hideable_shipping_form'>
+
+                <div class="md-form mb-5">
+                  <input type='text' placeholder='1234 Main St' id='shipping_address' name='shipping_address' class='form-control' />
+                  <label for="shipping_address" class="">Адресс</label>
+                </div>
+
+                <div class="md-form mb-5">
+                  <input type='text' placeholder='8-707-242-04-82' id='phone_number' name='phone_number' class='form-control' />
+                  <label for="phone_number" class="">Номер телефона</label>
+                </div>
+
+                <div class="md-form mb-5">
+                    <input type='text' placeholder='Proplex' id='comment' name='comment' class='form-control' />
+                    <label for="comment" class="">Название компании</label>
+                </div>
+
+              </div>
+
+              <hr class="mb-4">
+              <button class="btn btn-light btn-lg btn-block light-blue" type="submit" style="background-color: dodgerblue">Отправить заявку</button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+          {% include "order_snippet.html" %}
+        </div>
+
+      </div>
+
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script>
+var hideable_shipping_form = $('.hideable_shipping_form');
+var hideable_billing_form = $('.hideable_billing_form');
+
+var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
+var use_default_billing = document.querySelector("input[name=use_default_billing]");
+
+use_default_shipping.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_shipping_form.hide();
+  } else {
+    hideable_shipping_form.show();
+  }
+})
+
+use_default_billing.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_billing_form.hide();
+  } else {
+    hideable_billing_form.show();
+  }
+})
+
+</script>

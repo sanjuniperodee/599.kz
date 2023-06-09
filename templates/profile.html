@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account – Electro</title>
+{#<link rel="stylesheet" id="revslider-material-icons-css" href="https://electro.madrasthemes.com/wp-content/plugins/revslider/public/assets/fonts/material/material-icons.css?ver=6.5.7" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="revslider-basics-css-css" href="https://electro.madrasthemes.com/wp-content/plugins/revslider/admin/assets/css/basics.css?ver=6.5.7" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="rs-color-picker-css-css" href="https://electro.madrasthemes.com/wp-content/plugins/revslider/admin/assets/css/tp-color-picker.css?ver=6.5.7" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="revbuilder-ddTP-css" href="https://electro.madrasthemes.com/wp-content/plugins/revslider/admin/assets/css/ddTP.css?ver=6.5.7" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="rs-roboto-css" href="//fonts.googleapis.com/css?family=Roboto&amp;ver=6.0.5" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="tp-material-icons-css" href="//fonts.googleapis.com/icon?family=Material+Icons&amp;ver=6.0.5" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="wp-block-library-css" href="https://electro.madrasthemes.com/wp-includes/css/dist/block-library/style.min.css?ver=6.0.5" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="wc-blocks-vendors-style-css" href="https://electro.madrasthemes.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-vendors-style.css?ver=7.4.3" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="wc-blocks-style-css" href="https://electro.madrasthemes.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-style.css?ver=7.4.3" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="wpforms-gutenberg-form-selector-css" href="https://electro.madrasthemes.com/wp-content/plugins/wpforms-lite/assets/css/wpforms-full.min.css?ver=1.7.4.2" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="redux-extendify-styles-css" href="https://electro.madrasthemes.com/wp-content/plugins/redux-framework/redux-core/assets/css/extendify-utilities.css?ver=4.4.1" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="select2-css" href="https://electro.madrasthemes.com/wp-content/plugins/woocommerce/assets/css/select2.css?ver=6.5.1" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="jquery-colorbox-css" href="https://electro.madrasthemes.com/wp-content/plugins/yith-woocommerce-compare/assets/css/colorbox.css?ver=1.4.21" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="electro-fonts-css" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="font-electro-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/assets/css/font-electro.css?ver=3.3.0" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="fontawesome-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/assets/vendor/fontawesome/css/all.min.css?ver=3.3.0" type="text/css" media="all">#}
+{#<link rel="stylesheet" id="animate-css-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/assets/vendor/animate.css/animate.min.css?ver=3.3.0" type="text/css" media="all">#}
+<link rel="stylesheet" id="electro-style-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/style.min.css?ver=3.3.0" type="text/css" media="all">
+{#<link rel="stylesheet" id="electro-color-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/assets/css/colors/yellow.min.css?ver=3.3.0" type="text/css" media="all">#}
+</head>
+<body>
+{% include 'navbar.html' %}
+<div id="content" class="site-content" tabindex="-1">
+<div class="container">
+    <nav class="woocommerce-breadcrumb"><a href="/">Home</a><span class="delimiter"><i class="fa fa-angle-right"></i></span><a href="{% url 'core:profile' %}">My Account</a><span class="delimiter"><i class="fa fa-angle-right"></i></span><a href="{% url 'core:orders' %}">My Orders</a></nav><div class="site-content-inner row">
+<div id="primary" class="content-area">
+<main id="main" class="site-main">
+<article id="post-3854" class="post-3854 page type-page status-publish hentry">
+<header class="entry-header">
+<h1 class="entry-title">Account details</h1>
+</header>
+<div class="entry-content">
+<div class="woocommerce">
+<div class="woocommerce-MyAccount-content">
+<div class="woocommerce-notices-wrapper"></div>
+<form class="woocommerce-EditAccountForm edit-account" action="" method="post">
+<p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+<label for="account_first_name">First name&nbsp;<span class="required">*</span></label>
+<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="given-name" value="{{ user.first_name }}">
+</p>
+<p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
+<label for="account_last_name">Last name&nbsp;<span class="required">*</span></label>
+<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" value="{{ user.last_name }}">
+</p>
+<div class="clear"></div>
+<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+<label for="account_display_name">Display name&nbsp;<span class="required">*</span></label>
+<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" value="{{ user.username }}"> <span><em>This will be how your name will be displayed in the account section and in reviews</em></span>
+</p>
+<div class="clear"></div>
+<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+<label for="account_email">Email address&nbsp;<span class="required">*</span></label>
+<input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" value="{{ user.email }}">
+</p>
+    <input type="hidden" id="save-account-details-nonce" name="save-account-details-nonce" value="3e135fd9a5"><input type="hidden" name="_wp_http_referer" value="/my-account/edit-account/"> <button type="submit" class="woocommerce-Button button" name="save_account_details" value="Save changes">Save changes</button>
+
+<fieldset>
+<legend>Password change</legend>
+<p class="woocommerce-form-row woocommerce-form-row--wide form">
+<label for="password_current">Current password (leave blank to leave unchanged)</label>
+<span class="password-input"><input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_current" id="password_current" autocomplete="off" style="width: 40%"><span class="show-password-input"></span></span>
+</p>
+<p class="woocommerce-form-row woocommerce-form">
+<label for="password_1">New password (leave blank to leave unchanged)</label>
+<span class="password-input"><input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_1" id="password_1" autocomplete="off" style="width: 40%"><span class="show-password-input"></span></span>
+</p>
+<p class="woocommerce-form-row woocommerce-form-row--wide">
+<label for="password_2">Confirm new password</label>
+<span class="password-input"><input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_2" id="password_2" autocomplete="off" style="width: 40%"><span class="show-password-input"></span></span>
+</p>
+</fieldset>
+<div class="clear"></div>
+<p>
+<input type="hidden" id="save-account-details-nonce" name="save-account-details-nonce" value="3e135fd9a5"><input type="hidden" name="_wp_http_referer" value="/my-account/edit-account/"> <button type="submit" class="woocommerce-Button button" name="save_account_details" value="Save changes">Save changes</button>
+<input type="hidden" name="action" value="save_account_details">
+</p>
+</form>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+</div>
+</div>
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

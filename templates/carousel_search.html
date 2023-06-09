@@ -1,0 +1,47 @@
+{% load static %}
+<style>
+    #img-c{
+        height: 230px;
+        line-height: 230px;
+        margin-bottom: 10px;
+        display: flex;
+    }
+    .img{
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 100%;
+        max-height: 100%;
+    }
+    @media screen  and (max-width: 760px) {
+        #img-c {
+            height: 160px;
+            line-height: 160px;
+        }
+    }
+</style>
+<div class="container-fluid pt-5 pb-3" style="width: 95%">
+<a class="text-decoration-none text-center"><h2 class="text-uppercase mx-xl-5 mb-4 justify-content-center bg-default" >Результаты поиска</h2></a>
+<div class="row px-xl-5">
+    {% for item in searching_list %}
+        <div class="col-lg-2 col-md-4 col-sm-6 pb-1 col-6">
+            <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden justify-content-around" id="img-c">
+                    <a href="{{ item.get_absolute_url }}">
+                        <img class="img" src="{{ item.image.url }}" alt="">
+                    </a>
+                </div>
+                <div class="text-center pt-2" style="word-break: break-word;">
+                    <a class="text-decoration-none" href="{{ item.get_absolute_url }}"><p style="color: black; min-height: 36px; max-height: 36px; font-size: 12px">{{ item.title }}</p></a>
+
+                    <div class="d-flex align-items-center justify-content-center" style="margin-top: 20px">
+                        <p style="font-size: 12px;color: black">{{ item.get_price }}₸</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center" style="height: 40px;">
+                    <button style="border-radius: 15px; color: dodgerblue" class="btn btn-outline-dark" id="add_to_card"  value="{{ item.slug }}" type="button"><i class="fa fa-shopping-cart bg-transparent" style="color: dodgerblue"></i></button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+    </div>
