@@ -18,11 +18,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{% static 'lib/animate/animate.min.css'%}" rel="stylesheet">
-    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+{#    <link href="{% static 'lib/animate/animate.min.css'%}" rel="stylesheet">#}
+{#    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">#}
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{% static  'css/style4.css'%}" rel="stylesheet">
+{#    <link href="{% static  'css/style4.css'%}" rel="stylesheet">#}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/style4.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/newstyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slider1.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}" />
+    <script src="{% static 'js/jquery-3.5.1.js' %}" ></script>
+    <script src="{% static 'js/lightslider.js' %}" ></script>
 </head>
 <body>
 {% include "navbar.html" %}
@@ -30,7 +37,7 @@
   <section class="mb-4">
     <div class="row wow fadeIn">
       <div class='col-6 offset-3'>
-        <h1>{% trans "Sign Up" %}</h1>
+        <h1>{% trans "Регистрация" %}</h1>
         <p>{% blocktrans %}Если у вас уже есть аккаунт, можете <a href="{{ login_url }}">войти</a>.{% endblocktrans %}</p>
         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
           {% csrf_token %}
@@ -38,7 +45,7 @@
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
-          <button class='btn btn-primary' type="submit">{% trans "Sign Up" %} &raquo;</button>
+            <button type="submit" class="btn btn-info">Sign Up</button>
         </form>
       </div>
     </div>

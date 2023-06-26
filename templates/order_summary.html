@@ -27,7 +27,7 @@
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="cart_container">
-						<div class="cart_title">Shopping Cart</div>
+						<div class="cart_title">Корзина</div>
 						<div class="cart_items">
                             {% for item in order.items.all %}
 							<ul class="cart_list">
@@ -52,11 +52,11 @@
 										</div>
 										<div class="cart_item_price cart_info_col">
 											<div class="cart_item_title">Price</div>
-											<div class="cart_item_text">${{ item.item.get_price }}</div>
+											<div class="cart_item_text">₸{{ item.item.get_price }}</div>
 										</div>
 										<div class="cart_item_total cart_info_col">
 											<div class="cart_item_title">Total</div>
-											<div class="cart_item_text">${{ item.get_total_item_price }}</div>
+											<div class="cart_item_text">₸{{ item.get_total_item_price }}</div>
 										</div>
 									</div>
 								</li>
@@ -67,15 +67,15 @@
 						<!-- Order Total -->
 						<div class="order_total">
 							<div class="order_total_content text-md-right">
-								<div class="order_total_title">Order Total:</div>
-								<div class="order_total_amount">${{ order.get_total }}</div>
+								<div class="order_total_title">Общая сумма:</div>
+								<div class="order_total_amount">₸{{ order.get_total }}</div>
 							</div>
 						</div>
 
 						<div class="cart_buttons">
-							<a class="button cart_button_checkout" href='/'>Back to Shopping</a>
-							<a class="button cart_button_checkout" href='/checkout/'>Confirm</a>
-                            <a class="button cart_button_checkout" style="background-color: red" href='/order-clear'>Clear cart</a>
+							<a class="button cart_button_checkout" href='/'>Назад к товарам</a>
+							<a class="button cart_button_checkout" href='/checkout/'>Перейти к оплате</a>
+                            <a class="button cart_button_checkout" style="background-color: red" href='/order-clear'>Очистить корзину</a>
 						</div>
 					</div>
 				</div>

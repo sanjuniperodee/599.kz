@@ -10,6 +10,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css'%}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css'%}">
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    float: left;
+    height: 46px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+    </style>
 </head>
 
 <body>
@@ -37,15 +78,32 @@
 					<div class="product_description">
 						<div class="product_category">{{ item.category }}</div>
 						<div class="product_name">{{ item.title }}</div>
-						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
-						<div class="product_text"><p>{{ item.description }}</p></div>
+{#						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>#}
+						<div class="product_text">
+                            {% for row in description %}
+                            <p>{{ row }}</p>
+{#                                <br>#}
+                            {% endfor %}
+                        </div>
+                          <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5" />
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                          </div>
 						<div class="order_info d-flex flex-row">
 							<form action="#">
 								<div class="clearfix" style="z-index: 1000;">
 
 									<!-- Product Quantity -->
 									<div class="product_quantity clearfix">
-										<span>Quantity: </span>
+										<span>Количество: </span>
 										<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
 										<div class="quantity_buttons">
 											<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
@@ -72,7 +130,7 @@
 
 								<div class="product_price">${{ item.get_price }}</div>
 								<div class="button_container">
-									<button type="button" class="button cart_button" id="add_to_card"  value="{{ item.slug }}" type="button">Add to Cart</button>
+									<button type="button" class="button cart_button" id="add_to_card"  value="{{ item.slug }}" type="button">Добавить в корзину</button>
 									<div class="product_fav"><i class="fas fa-heart"></i></div>
 								</div>
 
@@ -92,7 +150,7 @@
 			<div class="row">
 				<div class="col">
 					<div class="viewed_title_container">
-						<h3 class="viewed_title">Recently Viewed</h3>
+						<h3 class="viewed_title">Отзывы о товаре</h3>
 						<div class="viewed_nav_container">
 							<div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
 							<div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
@@ -203,37 +261,6 @@
 	</div>
 
 	<!-- Brands -->
-
-	<div class="brands">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="brands_slider_container">
-
-						<!-- Brands Slider -->
-
-						<div class="owl-carousel owl-theme brands_slider">
-
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_1.jpg" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_2.jpg" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_3.jpg" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_4.jpg" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_5.jpg" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_6.jpg" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_7.jpg" alt=""></div></div>
-							<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="images/brands_8.jpg" alt=""></div></div>
-
-						</div>
-
-						<!-- Brands Slider Navigation -->
-						<div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
-						<div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Newsletter -->
 

@@ -29,6 +29,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
 from .models import Item, OrderItem, Order, Coupon, Refund, UserProfile, Brand, Category, SubCategory, ItemImage
@@ -99,7 +100,12 @@ class CheckoutView(View):
                 print(shipping_address)
                 print(phone_number)
                 print(comment)
-                secret_key = "N8O2w1rx6NDY2JyR"
+                subprocess.call("php core\\smt.php " + str(order.id) + " " + str(int(order.get_total())), shell=True)
+                print(os.path.exists("\\core\\testfile.txt"))
+                content = ""
+                with open("core\\testfile.txt") as f:
+                    content = f.readlines()
+                print(content)
                 request = {
                     'pg_order_id': order.id,
                     'pg_merchant_id': "550089",
@@ -110,38 +116,13 @@ class CheckoutView(View):
                     'pg_failure_url': 'http://127.0.0.1:8000/checkout/',
                     'pg_success_url_method': 'GET',
                     'pg_failure_url_method': 'GET',
+                    'pg_sig': content[0],
                 }
-
-                def make_flat_params_array(arr_params, parent_name=''):
-                    arr_flat_params = {}
-                    i = 0
-                    for key, val in arr_params.items():
-                        i += 1
-                        name = parent_name + key + f'{i:03d}'
-                        if isinstance(val, dict):
-                            arr_flat_params.update(make_flat_params_array(val, name))
-                            continue
-                        arr_flat_params[name] = str(val)
-
-                    return arr_flat_params
-                request_for_signature = make_flat_params_array(request)
-
-                # Generate the signature
-                sorted_params = sorted(request_for_signature.items(), key=lambda x: x[0])
-                # sorted_params.insert(0, ('', 'payment_page'))
-                signature_data = 'payment_page' + ';'.join([f'{k}={v}' for k, v in sorted_params]) + secret_key
-                # request['pg_sig'] = hashlib.md5(signature_data.encode()).hexdigest()
-                request['pg_sig'] = 'ed7e2d92a5f306520d0641e5e3846c49'
                 print(request)
-
-
-
-                result = requests.post('https://api.paybox.money/g2g/payment_page', params=request)
+                result = requests.post('https://api.freedompay.money/init_payment.php', params=request)
                 print(result)
                 sg = ""
                 result = str(result.text)
-                smt = ""
-                print(len(result))
                 print(result)
                 for i in range(10, len(result)):
                     if result[i] == 'l' and result[i + 1] == '>':
@@ -157,11 +138,11 @@ class CheckoutView(View):
             return redirect("core:order-summary")
 
 def SuccesPayment(request):
-    order = Order.objects.get(id=request.GET.get('pg_order_id'))
-    order_items = order.items.all()
-    order_items.update(payment=True)
-    for item in order_items:
-        item.save()
+    order = Order.objects.get(id=request.GET.get('pg_order_id'), payment=False)
+    # order_items = order.items.all()
+    # order_items.update(payment=True)
+    # for item in order_items:
+    #     item.save()
     order.ordered_date = timezone.now()
     order.payment = True
     order.ref_code = create_ref_code()
@@ -172,7 +153,10 @@ def SuccesPayment(request):
 
 @csrf_exempt
 def home1(request, ctg, ctg2):
-    object_list = Item.objects.filter(category__title=ctg, subcategory__title=ctg2)
+    if ctg2 != 'all':
+        object_list = Item.objects.filter(category__title=ctg, subcategory__title=ctg2)
+    else:
+        object_list = Item.objects.filter(category__title=ctg)
     paginator = Paginator(object_list, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -194,6 +178,39 @@ def orders(request):
 @login_required
 def profile(request):
     categories = Category.objects.all()
+    if request.method == "POST":
+        cnt = 0
+        if len(User.objects.filter(username=request.POST['username'])) > 0 and request.POST[
+            'username'] != request.user.username:
+            messages.info(request, 'User already exists')
+            cnt = 1
+        if len(request.POST['password1']) > 0:
+            if len(request.POST['password1']) < 8:
+                messages.info(request, 'Password must contain at least 8 symbols')
+                cnt = 1
+            if len(request.POST['password1']) and len(request.POST['password2']) and request.POST['password1'] != \
+                    request.POST['password2']:
+                messages.info(request, 'Password not matching')
+                cnt = 1
+            if len(request.POST['password1']) < 8 and request.POST['password1'] == request.POST['password2']:
+                pattern = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$'
+                if not re.match(pattern, password1):
+                    messages.info(request, "Password must contain at least 1 uppercase, 1 lowercase and one number")
+                    cnt = 1
+        if cnt == 1:
+            return redirect('core:edit_profile')
+        else:
+            if len(request.POST['password1']) > 0 and len(request.POST['password2']) > 0:
+                request.user.password1 = request.POST['password1']
+                request.user.password2 = request.POST['password2']
+
+            request.user.username = request.POST['username']
+            request.user.email = request.POST['email']
+            request.user.first_name = request.POST['first_name']
+            request.user.last_name = request.POST['first_name']
+            request.user.save()
+            messages.success(request, "Account was created successfully")
+            return redirect('core:profile')
     print(request.user.username)
     return render(request, 'profile.html', {'user': request.user,'categories': categories})
 
@@ -326,7 +343,10 @@ def _user_is_authenticated(user):
 @login_required
 def order_summary(request):
     categories = Category.objects.all()
-    order = Order.objects.filter(user=request.user, payment=False)[0]
+    try:
+        order = Order.objects.filter(user=request.user, payment=False)[0]
+    except:
+        order = Order.objects.create(user=request.user, payment=False)
     print(request.user)
     context = {
         'order': order,
@@ -342,6 +362,7 @@ def detail(request, slug):
     print(12312313)
     # print(images[0].images)
     context = {
+        'description': item.description.split('\n'),
         'item': item,
         'images': images
     }

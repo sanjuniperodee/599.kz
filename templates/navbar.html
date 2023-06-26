@@ -5,6 +5,7 @@
 <meta name="description" content="OneTech shop project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 <link href="{% static 'plugins/fontawesome-free-5.0.1/css/fontawesome-all.css' %}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
@@ -63,28 +64,27 @@
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'img/phone.png'%}" alt=""></div>+38 068 005 3570</div>
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'img/mail.png' %}" alt=""></div><a href="https://colorlib.com/cdn-cgi/l/email-protection#234542505750424f465063444e424a4f0d404c4e"><span class="__cf_email__" data-cfemail="34525547404755585147745359555d581a575b59">[email&#160;protected]</span></a></div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'img/phone.png'%}" alt=""></div>+7 708 242 4001</div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'img/mail.png' %}" alt=""></div><a href=""><span class="__cf_email__" >599kz@gmail.com</span></a></div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_menu">
 								<ul class="standard_dropdown top_bar_dropdown">
 									<li>
                                         <a href="{% url 'account_logout' %}">Выход с аккаунта</a>
 									</li>
-									<li>
-										<a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">EUR Euro</a></li>
-											<li><a href="#">GBP British Pound</a></li>
-											<li><a href="#">JPY Japanese Yen</a></li>
-										</ul>
-									</li>
 								</ul>
 							</div>
-							<div class="top_bar_user">
+                            {% if request.user.is_authenticated %}
+                                <div class="top_bar_user">
 								<div class="user_icon"><a href="{% url 'core:profile' %}"><img src="{% static 'img/user.svg' %}" alt=""></a></div>
-								<div><a href="{% url 'account_login' %}">Sign in / Sign up</a></div>
+								<div><a href="{% url 'core:profile' %}">{{ user.username }}</a></div>
 							</div>
+                            {% else %}
+							<div class="top_bar_user">
+								<div class="user_icon"><a><img src="{% static 'img/user.svg' %}" alt=""></a></div>
+								<div><a href="{% url 'account_login' %}">Войти </a> <a>/</a> <a href="{% url 'account_signup' %}">Зарегистрироваться</a></div>
+							</div>
+                            {% endif %}
 						</div>
 					</div>
 				</div>
@@ -100,28 +100,31 @@
 					<!-- Logo -->
 					<div class="col-lg-2 col-sm-3 col-3 order-1">
 						<div class="logo_container">
-							<div class="logo"><a href="{% url 'core:home' %}"><img src="{% static 'img/1.png'%}" alt="" width="100%"></a></div>
+							<div class="logo"><a href="{% url 'core:home' %}"><img src="{% static 'img/1.png'%}" alt="" width="130%"></a></div>
 						</div>
 					</div>
 
 					<!-- Search -->
-					<div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+					<div class="col-lg-7 col-12 order-lg-2 order-3 text-lg-left text-right">
 						<div class="header_search">
 							<div class="header_search_content">
 								<div class="header_search_form_container">
-									<form action="#" class="header_search_form clearfix">
-										<input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+									<form action="POST" class="header_search_form clearfix">
+										<input type="search" required="required" class="header_search_input" style="width: 290px;" placeholder="Найти товар">
 										<div class="custom_dropdown">
-											<div class="custom_dropdown_list">
-												<span class="custom_dropdown_placeholder clc">All Categories</span>
-												<i class="fas fa-chevron-down"></i>
-												<ul class="custom_list clc">
-													<li><a class="clc" href="#">All Categories</a></li>
-													<li><a class="clc" href="#">Computers</a></li>
-													<li><a class="clc" href="#">Laptops</a></li>
-													<li><a class="clc" href="#">Cameras</a></li>
-													<li><a class="clc" href="#">Hardware</a></li>
-													<li><a class="clc" href="#">Smartphones</a></li>
+											<div class="custom_dropdown_list" style="width: 350px">
+												<span class="custom_dropdown_placeholder clc">Все категории</span>
+{#                                                <i class="fas fa-chevron-down"></i>#}
+												<ul class="custom_list clc" style="width: 350px">
+                                                    <li><a class="clc" href="#">Все категории</a></li>
+                                                    {% for category in categories %}
+													<li><a class="clc" href="#">{{ category.title }}</a></li>
+                                                    {% endfor %}
+{#													<li><a class="clc" href="#">Computers</a></li>#}
+{#													<li><a class="clc" href="#">Laptops</a></li>#}
+{#													<li><a class="clc" href="#">Cameras</a></li>#}
+{#													<li><a class="clc" href="#">Hardware</a></li>#}
+{#													<li><a class="clc" href="#">Smartphones</a></li>#}
 												</ul>
 											</div>
 										</div>
@@ -133,12 +136,12 @@
 					</div>
 
 					<!-- Wishlist -->
-					<div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
+					<div class="col-lg-3 col-9 order-lg-3 order-2 text-lg-left text-right">
 						<div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
 							<div class="wishlist d-flex flex-row align-items-center justify-content-end">
 								<div class="wishlist_icon"><img src="{% static 'img/heart.png' %}" alt=""></div>
 								<div class="wishlist_content">
-									<div class="wishlist_text"><a href="#">Wishlist</a></div>
+									<div class="wishlist_text"><a style="font-size: 100%" href="#">Желаемое</a></div>
 									<div class="wishlist_count">115</div>
 								</div>
 							</div>
@@ -151,7 +154,7 @@
 										<div class="cart_count"><span>10</span></div>
 									</div>
 									<div class="cart_content">
-										<div class="cart_text"><a href="{% url 'core:order-summary' %}">Cart</a></div>
+										<div class="cart_text"><a style="font-size: 100%"f href="{% url 'core:order-summary' %}">Корзина</a></div>
 										<div class="cart_price">$85</div>
 									</div>
 								</div>
@@ -164,45 +167,127 @@
 		
 		<!-- Main Navigation -->
 
-		<nav class="main_nav px-5" style="background: yellow">
+		<nav class="main_nav px-5" style="background: #FFEA00">
 			<div class=" w-100 m-0 p-0 justify-content-around">
 				<div class="row w-100 m-0 p-0 justify-content-around">
 					<div class="col w-100 m-0 p-0">
 						
-						<div class="main_nav_content w-100 m-0 p-0">
-							<div class="cat_menu_container">
+						<div class="main_nav_content w-100 m-0 p-0 d-flex justify-content-between" style="background: #FFEA00">
+							<div class="cat_menu_container d-none d-xl-block m-0 p-0">
 								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
 									<div class="cat_burger"><span></span><span></span><span></span></div>
 									<div class="cat_menu_text">Категории</div>
 								</div>
 
 								<ul class="cat_menu">
-                                    {% for category in categories %}
-                                    <li><a href="{% url 'core:shop' category.title 'all' %}">{{ category.title }}<i class="fas fa-chevron-right ml-auto"></i></a></li>
-                                    {% endfor %}
+
+                                    <li><a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/all">Техника и электроника<i class="fas fa-chevron-right ml-auto"></i></a></li>
+
+                                    <li><a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/all">Бытовые товары и инструменты<i class="fas fa-chevron-right ml-auto"></i></a></li>
+
+                                    <li><a href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/all">Офисные товары и канцелярия<i class="fas fa-chevron-right ml-auto"></i></a></li>
+
+                                    <li><a href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/all">Строительные и ремонтные товары<i class="fas fa-chevron-right ml-auto"></i></a></li>
+
+                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/all">Аксессуары<i class="fas fa-chevron-right ml-auto"></i></a></li>
+
+                                    <li><a href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/all">Одежда и обувь<i class="fas fa-chevron-right ml-auto"></i></a></li>
+
 								</ul>
 							</div>
-							<div class="main_nav_menu w-100 m-0 p-0" >
-								<ul class="standard_dropdown main_nav_dropdown d-flex justify-content-around">
-									{% for category in categories %}
+							<div class="main_nav_menu w-100 m-0 p-0 d-none d-lg-block d-xl-block" >
+								<ul class="standard_dropdown main_nav_dropdown w-100 d-flex justify-content-around m-0 p-0" style="margin: 0; padding: 0">
+
 									<li class="hassubs">
-										<a href="{% url 'core:shop' category.title 'all' %}" style="font-size: 100%; color: black">{{ category.title }}<i class="fas fa-chevron-down"></i></a>
+										<a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/all" style="font-size: 85%; color: black">Техника и электроника<i class="fas fa-chevron-down"></i></a>
 										<ul>
-                                            {% for sub in category.subcategories.all %}
-											<li><a href="{% url 'core:shop' category.title sub.title %}">{{ sub.title }}<i class="fas fa-chevron-down"></i></a></li>
-                                            {% endfor %}
+
+											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D1%8B%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Мобильные телефоны и аксессуары<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0">Электроника<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9D%D0%B0%D1%80%D1%83%D1%87%D0%BD%D1%8B%D0%B5%20%D1%87%D0%B0%D1%81%D1%8B">Наручные часы<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%20%D0%B8%20%D0%BC%D0%BE%D1%82%D0%BE%D1%86%D0%B8%D0%BA%D0%BB">Автомобиль и мотоцикл<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%B8%D0%BD%D0%B0%D0%B4%D0%BB%D0%B5%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8">Электронные компоненты и принадлежности<i class="fas fa-chevron-down"></i></a></li>
+
 										</ul>
 									</li>
-                                    {% endfor %}
+
+									<li class="hassubs">
+										<a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/all" style="font-size: 85%; color: black">Бытовые товары и инструменты<i class="fas fa-chevron-down"></i></a>
+										<ul>
+
+											<li><a style="color: black" href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0">Бытовая техника<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%94%D0%BE%D0%BC%20%D0%B8%20%D1%81%D0%B0%D0%B4,%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B">Дом и сад, инструменты<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D0%B0%D0%B3%D0%B0%D0%B6%20%D0%B8%20%D1%81%D1%83%D0%BC%D0%BA%D0%B8">Багаж и сумки<i class="fas fa-chevron-down"></i></a></li>
+
+										</ul>
+									</li>
+
+									<li class="hassubs">
+										<a href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/all" style="font-size: 85%; color: black">Офисные товары и канцелярия<i class="fas fa-chevron-down"></i></a>
+										<ul>
+
+											<li><a style="color: black" href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%B0%D0%BD%D1%86%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B">Канц товары<i class="fas fa-chevron-down"></i></a></li>
+
+										</ul>
+									</li>
+
+									<li class="hassubs">
+										<a href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/all" style="font-size: 85%; color: black">Строительные и ремонтные товары<i class="fas fa-chevron-down"></i></a>
+										<ul>
+
+											<li><a style="color: black" href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82">Строительство и ремонт<i class="fas fa-chevron-down"></i></a></li>
+
+										</ul>
+									</li>
+
+									<li class="hassubs">
+										<a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/all" style="font-size: 85%; color: black">Аксессуары<i class="fas fa-chevron-down"></i></a>
+										<ul>
+
+											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D1%8B%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Мобильные телефоны и аксессуары<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0">Электроника<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9D%D0%B0%D1%80%D1%83%D1%87%D0%BD%D1%8B%D0%B5%20%D1%87%D0%B0%D1%81%D1%8B">Наручные часы<i class="fas fa-chevron-down"></i></a></li>
+
+										</ul>
+									</li>
+
+									<li class="hassubs">
+										<a href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/all" style="font-size: 85%; color: black">Одежда и обувь<i class="fas fa-chevron-down"></i></a>
+										<ul>
+
+											<li><a style="color: black" href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0">Одежда<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%9E%D0%B1%D1%83%D0%B2%D1%8C">Обувь<i class="fas fa-chevron-down"></i></a></li>
+
+											<li><a style="color: black" href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%94%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0">Детская одежда<i class="fas fa-chevron-down"></i></a></li>
+
+										</ul>
+									</li>
+
 								</ul>
 							</div>
+
 
 							<!-- Menu Trigger -->
 
-							<div class="menu_trigger_container ml-auto">
+							<div class="menu_trigger_container ml-auto d-block d-lg-none d-xl-none" >
 								<div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
 									<div class="menu_burger">
-										<div class="menu_trigger_text">menu</div>
+										<div class="menu_trigger_text" >Меню</div>
 										<div class="cat_burger menu_burger_inner"><span></span><span></span><span></span></div>
 									</div>
 								</div>
@@ -216,12 +301,12 @@
 		
 		<!-- Menu -->
 
-		<div class="page_menu">
-			<div class="container">
-				<div class="row">
+		<div class="page_menu" >
+			<div class="container" >
+				<div class="row" >
 					<div class="col">
 						
-						<div class="page_menu_content">
+						<div class="page_menu_content" >
 							
 							<div class="page_menu_search">
 								<form action="#">
@@ -229,24 +314,6 @@
 								</form>
 							</div>
 							<ul class="page_menu_nav">
-								<li class="page_menu_item has-children">
-									<a href="#">Language<i class="fa fa-angle-down"></i></a>
-									<ul class="page_menu_selection">
-										<li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Italian<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
-									</ul>
-								</li>
-								<li class="page_menu_item has-children">
-									<a href="#">Currency<i class="fa fa-angle-down"></i></a>
-									<ul class="page_menu_selection">
-										<li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">GBP British Pound<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
-									</ul>
-								</li>
 								<li class="page_menu_item">
 									<a href="#">Home<i class="fa fa-angle-down"></i></a>
 								</li>
@@ -286,12 +353,10 @@
 										<li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
 									</ul>
 								</li>
-								<li class="page_menu_item"><a href="blog.html">blog<i class="fa fa-angle-down"></i></a></li>
-								<li class="page_menu_item"><a href="contact.html">contact<i class="fa fa-angle-down"></i></a></li>
 							</ul>
-							
+
 							<div class="menu_contact">
-								<div class="menu_contact_item"><div class="menu_contact_icon"><img src="{% static 'img/phone_white.png'%}" alt=""></div>+38 068 005 3570</div>
+								<div class="menu_contact_item"><div class="menu_contact_icon"><img src="{% static 'img/phone_white.png'%}" alt=""></div>+7 707 242 4001</div>
 								<div class="menu_contact_item"><div class="menu_contact_icon"><img src="{% static 'img/mail_white.png' %}" alt=""></div><a href="https://colorlib.com/cdn-cgi/l/email-protection#fd9b9c8e898e9c91988ebd9a909c9491d39e9290"><span class="__cf_email__" data-cfemail="5f393e2c2b2c3e333a2c1f38323e3633713c3032">[email&#160;protected]</span></a></div>
 							</div>
 						</div>

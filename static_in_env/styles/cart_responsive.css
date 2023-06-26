@@ -186,6 +186,7 @@
 	}
 	.cat_menu_container ul
 	{
+		display: none;
 		visibility: hidden;
 		opacity: 0;
 	}

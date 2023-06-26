@@ -4,47 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link rel="icon" type="image/png" href="{% static 'img/proplex_logo.png' %}">
-    <title>Proplex.kz</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <title>599.kz</title>
     <link href="{% static 'css/style4.css'%}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/newstyle.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/slider1.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}" />
     <script src="{% static 'js/jquery-3.5.1.js' %}" ></script>
     <script src="{% static 'js/lightslider.js' %}" ></script>
-{#    <script src="http://schauhan.in/Examples/ecommerce_product_slider/lightslider.js" ></script>#}
-    <script>
-          $(document).ready(function() {
-        $('#autoWidth1').lightSlider({
-            autoWidth:true,
-            loop:true,
-            onSliderLoad: function() {
-                $('#autoWidth').removeClass('cS-hidden');
-            }
-        });
-      });
-	</script>
-    <style>
-        #slider{
-            height: 382px;
-        }
-        #img-c{
-            justify-content: space-around;
-            display: flex;
-            height: 230px;
-            line-height: 230px;
-        }
-        @media screen  and (max-width: 760px){
-            .box{
-                width: 160px;
-            }
-            #img-c{
-                height: 160px;
-                line-height: 160px;
-            }
-        }
-    </style>
 </head>
 <body>
 {% include "navbar.html" %}

@@ -261,7 +261,7 @@ section
 	font-style: normal;
 	font-size: 19px;
 	margin-right: 4px;
-	color: #f5e211;
+	color: #FFEA00;
 }
 .rating_r_1 i:first-child::before{content: "\f005";}
 .rating_r_2 i:first-child::before{content: "\f005";}
