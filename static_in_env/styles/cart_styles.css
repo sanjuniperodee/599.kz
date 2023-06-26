@@ -1108,7 +1108,7 @@ select option
 	height: 50px;
 	line-height: 50px;
 	font-size: 14px;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
@@ -1214,7 +1214,7 @@ select option
 .cart_section
 {
 	width: 100%;
-	padding-top: 93px;
+	padding-top: 2%;
 	padding-bottom: 111px;
 }
 .cart_title
@@ -1224,7 +1224,7 @@ select option
 }
 .cart_items
 {
-	margin-top: 67px;
+	margin-top: 3%;
 }
 .cart_list
 {

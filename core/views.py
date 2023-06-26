@@ -207,7 +207,7 @@ def profile(request):
             request.user.username = request.POST['username']
             request.user.email = request.POST['email']
             request.user.first_name = request.POST['first_name']
-            request.user.last_name = request.POST['first_name']
+            request.user.last_name = request.POST['last_name']
             request.user.save()
             messages.success(request, "Account was created successfully")
             return redirect('core:profile')
