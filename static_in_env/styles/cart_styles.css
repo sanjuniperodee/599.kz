@@ -875,10 +875,10 @@ select option
 }
 .cat_menu_container
 {
-	width: 293px;
+	/*width: 293px;*/
 	height: 100%;
 	background: #0e8ce4;
-	padding-left: 35px;
+	/*padding-left: 35px;*/
 	cursor: pointer;
 	z-index: 1;
 }

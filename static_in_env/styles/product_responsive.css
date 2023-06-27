@@ -65,7 +65,7 @@
 {
 	.cat_menu_container
 	{
-		width: 211px;
+		/*width: 211px;*/
 		padding-left: 25px;
 	}
 	.main_nav_dropdown li
@@ -397,7 +397,7 @@
 	.cat_menu_container
 	{
 		width: auto;
-		padding-right: 15px;
+		/*padding-right: 15px;*/
 	}
 	.cat_menu_text
 	{

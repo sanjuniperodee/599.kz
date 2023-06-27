@@ -861,10 +861,10 @@ select option
 }
 .cat_menu_container
 {
-	width: 293px;
+	/*width: 293px;*/
 	height: 100%;
 	background: #FFEA00;
-	padding-left: 35px;
+	/*padding-left: 35px;*/
 	cursor: pointer;
 	z-index: 1;
 }
@@ -896,10 +896,9 @@ select option
 }
 .cat_menu_text
 {
-	font-size: 18px;
+	font-size: 12px;
 	font-weight: 400;
 	color: #000000;
-	margin-left: 20px;
 }
 .cat_menu_container ul
 {
