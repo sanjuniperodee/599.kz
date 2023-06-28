@@ -424,52 +424,77 @@
 
 <ul class="navbar-nav">
 
-<li class="nav-item" >
+{#<li class="nav-item dropdown" data-toggle="dropdown">#}
+<div class="dropdown show">
+  <a class="nav-link font-weight-bold px-3 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Категории
+      <i class="fas fa-chevron-down"></i>
+  </a>
+  <div class="dropdown-menu show" aria-labelledby="dropdownMenuLink">
 
-<a class="nav-link text-light font-weight-bold px-3" href="#">HOME</a>
+        <a class="dropdown-item" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/all">Техника и электроника</a>
 
-</li>
+        <a class="dropdown-item" href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/all">Бытовые товары и инструменты</a>
 
-<li class="nav-item dropdown" data-toggle="dropdown">
+        <a class="dropdown-item" href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/all">Офисные товары и канцелярия</a>
 
-<a class="nav-link text-light font-weight-bold px-3 dropdown-toggle" href="#">CATEGORIES</a>
+        <a class="dropdown-item" href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/all">Строительные и ремонтные товары</a>
 
-<div class="dropdown-menu">
+        <a class="dropdown-item" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/all">Аксессуары</a>
 
-<a class="dropdown-item" href="#">Fast Food</a>
+        <a class="dropdown-item" href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/all">Одежда и обувь</a>
 
-<a class="dropdown-item" href="#">Lunch</a>
-
-<a class="dropdown-item" href="#">Dessert</a>
-
+  </div>
 </div>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link text-light font-weight-bold px-3" href="#">ABOUT US</a>
-
-</li>
-
-<li class="nav-item">
-
-<a class="nav-link text-light font-weight-bold px-3" href="#">CONTACT</a>
-
+<li class="nav-item" style="padding-left: 16px">
+    <div class="top_bar_contact_item">
+        <div class="top_bar_icon">
+            <img src="{% static 'img/phone.png'%}" alt="">
+        </div>
+        +7 708 242 4001
+    </div>
+    <div class="top_bar_contact_item">
+        <div class="top_bar_icon">
+            <img src="{% static 'img/mail.png' %}" alt="">
+        </div>
+        <a href="">
+            <span class="__cf_email__" >599kz@gmail.com</span>
+        </a>
+    </div>
 </li>
 
 </ul>
 
-
 <!-- Search bar -->
 
-<form class="form-inline ml-3">
-
+<form class="form-inline ml-2">
+{#<div class="header_search d-block">#}
+{#    <div class="header_search_content">#}
+{#        <div class="header_search_form_container">#}
+{#            <form action="POST" class="header_search_form clearfix w-100">#}
+{#                <input type="search" required="required" class="header_search_input" style="width: 100%" placeholder="Найти товар">#}
+{#                <div class="custom_dropdown">#}
+{#                    <div class="custom_dropdown_list" style="width: 350px">#}
+{#                        <span class="custom_dropdown_placeholder clc">Все категории</span>#}
+{#                        <i class="fas fa-chevron-down"></i>#}
+{#                        <ul class="custom_list clc" style="width: 350px">#}
+{#                            <li><a class="clc" href="#">Все категории</a></li>#}
+{#                            {% for category in categories %}#}
+{#                            <li><a class="clc" href="#">{{ category.title }}</a></li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <button type="submit" class="header_search_button trans_300" value="Submit"><img src="{% static 'img/search.png' %}" alt=""></button>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
 <div class="input-group">
 
-<input type="text" class="form-control " placeholder="Search" >
+<input type="text" class="form-control " placeholder="Найти" >
 
-{#<button type="submit"><i class="fa fa-search"></i></button>#}
+{#<button type="submit"><img src="{% static 'img/search.png' %}" alt=""></button>#}
 
 </div>
 

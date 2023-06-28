@@ -80,10 +80,14 @@
 						<div class="product_name">{{ item.title }}</div>
 {#						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>#}
 						<div class="product_text">
+                        <p style="font-weight: bold; color: black">
+                            Цена: ₸{{ item.get_price }}
+                        </p>
                             {% for row in description %}
                             <p>{{ row }}</p>
 {#                                <br>#}
                             {% endfor %}
+
                         </div>
                           <div class="rate">
                             <input type="radio" id="star5" name="rate" value="5" />
@@ -111,25 +115,8 @@
 										</div>
 									</div>
 
-									<!-- Product Color -->
-									<ul class="product_color">
-										<li>
-											<span>Color: </span>
-											<div class="color_mark_container"><div id="selected_color" class="color_mark"></div></div>
-											<div class="color_dropdown_button"><i class="fas fa-chevron-down"></i></div>
-
-											<ul class="color_list">
-												<li><div class="color_mark" style="background: #999999;"></div></li>
-												<li><div class="color_mark" style="background: #b19c83;"></div></li>
-												<li><div class="color_mark" style="background: #000000;"></div></li>
-											</ul>
-										</li>
-									</ul>
-
 								</div>
-
-								<div class="product_price">${{ item.get_price }}</div>
-								<div class="button_container">
+								<div class="button_container" style="margin-top: 20px">
 									<button type="button" class="button cart_button" id="add_to_card"  value="{{ item.slug }}" type="button">Добавить в корзину</button>
 									<div class="product_fav"><i class="fas fa-heart"></i></div>
 								</div>
