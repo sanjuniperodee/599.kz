@@ -398,7 +398,7 @@
     </a>
     {% if request.user.is_authenticated %}
         <div class="top_bar_user">
-        <div class="user_icon"><a href="{% url 'core:profile' %}"><img src="{% static 'img/user.svg' %}" style="height: 25px; width: 25px" alt=""></a></div>
+        <div class="user_icon"><a href="{% url 'core:profile' %}"><img class="imgg" src="{% static 'img/user.svg' %}" style="height: 25px; width: 25px" alt=""></a></div>
 {#        <div><a style="font-size: 14px"  href="{% url 'core:profile' %}">{{ user.username }}</a></div>#}
     </div>
     {% else %}
