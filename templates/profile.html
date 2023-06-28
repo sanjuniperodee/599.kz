@@ -24,9 +24,14 @@
 {#<link rel="stylesheet" id="animate-css-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/assets/vendor/animate.css/animate.min.css?ver=3.3.0" type="text/css" media="all">#}
 <link rel="stylesheet" id="electro-style-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/style.min.css?ver=3.3.0" type="text/css" media="all">
 {#<link rel="stylesheet" id="electro-color-css" href="https://electro.madrasthemes.com/wp-content/themes/electro/assets/css/colors/yellow.min.css?ver=3.3.0" type="text/css" media="all">#}
+<style>
+    .imgg{
+        height: 50px;
+    }
+</style>
 </head>
-<body>
 {% include 'navbar.html' %}
+<body>
 <div id="content" class="site-content" tabindex="-1">
 <div class="container">
     <nav class="woocommerce-breadcrumb"><a style="color: black" href="/">Home</a><span class="delimiter"><i class="fa fa-angle-right"></i></span><a style="color: black" href="{% url 'core:profile' %}">My Account</a><span class="delimiter"><i class="fa fa-angle-right"></i></span><a style="color: black; background: white" href="{% url 'core:orders' %}">My Orders</a></nav><div class="site-content-inner row">

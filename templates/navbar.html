@@ -394,7 +394,7 @@
 <nav class="navbar navbar-expand-md navbar-light sticky-top d-flex justify-content-between d-md-none" style="background-color: #E8E8E8;">
 
     <a class="navbar-brand" href="{% url 'core:home' %}" class="text-decoration-none">
-        <img src="{% static 'img/1.png'%}" alt="" height="50px">
+        <img class="imgg" src="{% static 'img/1.png'%}" alt="" height="50px">
     </a>
     {% if request.user.is_authenticated %}
         <div class="top_bar_user">
