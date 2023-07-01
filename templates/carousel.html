@@ -113,7 +113,11 @@
 													<div class="product_price">${{ item.price }}</div>
 													<div class="product_name"><div><a href="{% url 'core:product' item.slug %}">{{ item.title }}</a></div></div>
 													<div class="product_extras">
-														<button class="product_cart_button" id="add_to_card" value="{{ item.slug }}" type="button">Add to Cart</button>
+                                                        {% if request.user.is_authenticated %}
+														   <button class="product_cart_button" id="add_to_card" value="{{ item.slug }}" type="button">Add to Cart</button>
+                                                        {% else %}
+                                                            <a href="{% url 'account_login' %}"><button class="product_cart_button" type="button">Add to Cart</button></a>
+                                                        {% endif %}
 													</div>
 												</div>
 												<div class="product_fav"><i class="fas fa-heart"></i></div>

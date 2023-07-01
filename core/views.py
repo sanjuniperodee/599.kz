@@ -391,6 +391,7 @@ def detail_prev(request, slug):
             'images': images
         }
     return render(request, 'detail.html', context)
+@login_required
 def add_to_cart(request, slug):
     print(123)
     user = request.user

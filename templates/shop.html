@@ -130,7 +130,11 @@
 </div>
 <div class="d-flex align-items-center justify-content-center">
 <input type="hidden" value="{{ item.slug }}" id="slug" name="slug" class='slug'>
+{% if request.user.is_authenticated %}
 <button style="border-radius: 15px; font-size: 12px" name = "{{ item.title }}" class="btn btn-outline-dark" id="add_to_card"  value="{{ item.slug }}" type="button"><i class="fa fa-shopping-cart"></i></button>
+{% else %}
+<a href="{% url 'account_login' %}"><button style="border-radius: 15px; font-size: 12px" class="btn btn-outline-dark" type="button"><i class="fa fa-shopping-cart"></i></button></a>
+{% endif %}
 </div>
 </div>
 </div>
