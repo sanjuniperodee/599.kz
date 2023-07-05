@@ -232,7 +232,7 @@ def home(request):
         search = True
     categories = Category.objects.all()
     items = Item.objects.all()
-    if _user_is_authenticated(request.user):
+    if _user_is_authenticated(request.user) and len(Order.objects.filter(user=request.user)) > 0:
         number = Order.objects.filter(user=request.user)[0].get_count()
     else:
         number = 0

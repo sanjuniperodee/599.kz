@@ -11,13 +11,25 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/lightslider.css' %}" />
     <script src="{% static 'js/jquery-3.5.1.js' %}" ></script>
     <script src="{% static 'js/lightslider.js' %}" ></script>
+    <style>
+        .mobile{
+            height: 500px;
+            width: 100%;
+            background-image: url("{% static 'img/mobile.png' %}");
+            background-size: cover;
+        }
+        .main {
+            height: 700px;
+            width: 100%;
+            background-image: url("{% static 'img/carousel1.png' %}");
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 {% include "navbar.html" %}
-
-{#    <div class="banner_background" style="background-image:url({% static 'img/carousel1.png' %}); height: 1500px"></div>#}
-    <img  height="720px" src="{% static 'img/carousel1.png' %}" style="width: 100%">
-
+    <div class="main d-none d-lg-block"></div>
+    <div class="mobile d-lg-none d-md-none d-sm-block"></div>
     <div class="characteristics">
 		<div class="container">
 			<div class="row">
