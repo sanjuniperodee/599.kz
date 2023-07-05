@@ -146,7 +146,7 @@
 								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
 									<div class="cart_icon">
 										<a href="{% url 'core:order-summary' %}"><img src="{% static 'img/cart.png' %}" alt=""></a>
-										<div class="cart_count"><span>10</span></div>
+										<div class="cart_count"><span id="number">{{ number }}</span></div>
 									</div>
 									<div class="cart_content">
 										<div class="cart_text"><a style="font-size: 100%" href="{% url 'core:order-summary' %}">Корзина</a></div>

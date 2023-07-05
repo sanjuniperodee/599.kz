@@ -144,6 +144,8 @@
                     },
                     dataType:'json',
                     success:function(){
+                        let p = document.getElementById('number');
+                        console.log(p)
                         alert("Добавлено в корзину " + buttons[i]['name']);
                     }
                 })

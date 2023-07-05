@@ -118,6 +118,7 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
 
+
     def get_total_item_price(self):
         return int(self.quantity * self.item.price)
 
@@ -156,6 +157,12 @@ class Order(models.Model):
         total = 0
         for order_item in self.items.all():
             total += order_item.get_final_price()
+        return int(total)
+
+    def get_count(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.quantity
         return int(total)
 
 

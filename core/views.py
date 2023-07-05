@@ -233,6 +233,7 @@ def home(request):
     categories = Category.objects.all()
     items = Item.objects.all()
     context = {
+        'number': Order.objects.filter(user=request.user)[0].get_count(),
         'items': items,
         'search': search,
         'searching_list': list,
