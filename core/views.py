@@ -232,8 +232,12 @@ def home(request):
         search = True
     categories = Category.objects.all()
     items = Item.objects.all()
+    if _user_is_authenticated(request.user):
+        number = Order.objects.filter(user=request.user)[0].get_count()
+    else:
+        number = 0
     context = {
-        'number': Order.objects.filter(user=request.user)[0].get_count(),
+        'number': number,
         'items': items,
         'search': search,
         'searching_list': list,
