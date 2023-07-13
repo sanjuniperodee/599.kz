@@ -6,7 +6,6 @@ from django.http import request
 from django.shortcuts import reverse, get_object_or_404, redirect
 from django.utils import timezone
 from django_countries.fields import CountryField
-from colorfield.fields import ColorField
 
 ADDRESS_CHOICES = (
     ('B', 'Billing'),
