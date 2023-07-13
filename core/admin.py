@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Item, OrderItem, Order, Coupon, Refund, UserProfile, Brand, SubCategory, Category, ItemImage
+from .models import Item, OrderItem, Order, Coupon, Refund, UserProfile, Brand, SubCategory, Category, ItemImage, Color
 
 
 class PostImageAdmin(admin.StackedInline):
@@ -26,7 +26,7 @@ def make_refund_accepted(modeladmin, request, queryset):
 make_refund_accepted.short_description = 'Update orders to refund granted'
 
 admin.site.register(Brand)
-# admin.site.register(Item)
+admin.site.register(Color)
 admin.site.register(OrderItem)
 admin.site.register(Order)
 admin.site.register(Coupon)

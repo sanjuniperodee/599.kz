@@ -5,8 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Proplex.kz</title>
-    <link rel="icon" type="image/png" href="{% static 'img/proplex_logo.png' %}">
+    <title>599.kz</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -25,15 +24,22 @@
             <form method="POST" class="card-body">
               {% csrf_token %}
 
-              <h3>Адресс доставки</h3>
+              <h3>Способ доставки</h3>
+                <div class="md-form mb-5">
+                  <select class="form-control ml-0 mt-4" id="delivery" >
+                      <option value="dost">Доставка</option>
+{#                      <option value="sam">Самовызов</option>#}
+                    </select>
+                  <label for="shipping_address" class="">Выберите способ доставки(При выборе доставки к общей сумме прибавиться 2000 тенге)</label>
+                </div>
 
               <div class='hideable_shipping_form'>
 
-                <div class="md-form mb-5">
+                <div class="md-form mb-5" name="shipping_address">
                   <input type='text' placeholder='1234 Main St' id='shipping_address' name='shipping_address' class='form-control' />
                   <label for="shipping_address" class="">Адресс</label>
                 </div>
-                <div class="md-form mb-5">
+                <div class="md-form mb-5" name="shipping_address">
                   <input type='text' placeholder='0250001' id='shipping_address' name='shipping_address' class='form-control' />
                   <label for="shipping_address" class="">Почтовый индекс</label>
                 </div>
@@ -45,7 +51,7 @@
 
                 <div class="md-form mb-5">
                     <input type='text' placeholder='Proplex' id='comment' name='comment' class='form-control' />
-                    <label for="comment" class="">Название компании</label>
+                    <label for="comment" class="">Название компании(при наличии)</label>
                 </div>
 
               </div>
@@ -71,26 +77,15 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
 <script>
-var hideable_shipping_form = $('.hideable_shipping_form');
-var hideable_billing_form = $('.hideable_billing_form');
-
-var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
-var use_default_billing = document.querySelector("input[name=use_default_billing]");
-
-use_default_shipping.addEventListener('change', function() {
-  if (this.checked) {
-    hideable_shipping_form.hide();
-  } else {
-    hideable_shipping_form.show();
-  }
-})
-
-use_default_billing.addEventListener('change', function() {
-  if (this.checked) {
-    hideable_billing_form.hide();
-  } else {
-    hideable_billing_form.show();
-  }
-})
+$('#delivery').change(function() {
+  if($(this).val() === "sam")
+   {
+    $("div[name=shipping_address]").hide();
+   }
+   else
+   {
+   $("div[name=shipping_address]").show();
+   }
+ });
 
 </script>

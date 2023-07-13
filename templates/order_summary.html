@@ -35,15 +35,15 @@
 									<div class="cart_item_image"><img src="{{ item.item.image.url }}" alt=""></div>
 									<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
 										<div class="cart_item_name cart_info_col">
-											<div class="cart_item_title">Name</div>
+											<div class="cart_item_title">Название</div>
 											<div class="cart_item_text">{{ item.item.title }}</div>
 										</div>
 										<div class="cart_item_color cart_info_col">
-											<div class="cart_item_title">Color</div>
-											<div class="cart_item_text"><span style="background-color:#999999;"></span>Silver</div>
+											<div class="cart_item_title">Цвет</div>
+											<div class="cart_item_text"><span style="background-color:{{ item.color.encode }};"></span>{{ item.color.title }}</div>
 										</div>
 										<div class="cart_item_quantity cart_info_col">
-											<div class="cart_item_title">Quantity</div>
+											<div class="cart_item_title">Количество</div>
 											<div class="cart_item_text">
                                                 <a href="{% url 'core:remove-single-item-from-cart' item.item.slug %}" style="font-size: 12px"><i class="fas fa-minus mr-2"></i></a>
                                                 {{ item.quantity }}
@@ -51,11 +51,11 @@
                                             </div>
 										</div>
 										<div class="cart_item_price cart_info_col">
-											<div class="cart_item_title">Price</div>
+											<div class="cart_item_title">Цена</div>
 											<div class="cart_item_text">₸{{ item.item.get_price }}</div>
 										</div>
 										<div class="cart_item_total cart_info_col">
-											<div class="cart_item_title">Total</div>
+											<div class="cart_item_title">Сумма</div>
 											<div class="cart_item_text">₸{{ item.get_total_item_price }}</div>
 										</div>
 									</div>

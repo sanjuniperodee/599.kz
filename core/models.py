@@ -6,6 +6,7 @@ from django.http import request
 from django.shortcuts import reverse, get_object_or_404, redirect
 from django.utils import timezone
 from django_countries.fields import CountryField
+from colorfield.fields import ColorField
 
 ADDRESS_CHOICES = (
     ('B', 'Billing'),
@@ -44,10 +45,17 @@ class Brand(models.Model):
     def __str__(self):
         return self.title
 
+class Color(models.Model):
+    title = models.CharField(max_length=100, null=True, blank=True)
+    encode = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField(null=True)
+    color = models.ManyToManyField(Color, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, blank=True)
     slug = models.SlugField(null=True)
@@ -108,11 +116,12 @@ class ItemImage(models.Model):
 
 
 class OrderItem(models.Model):
-    session_id = models.CharField(max_length=100, null=True)
+    session_id = models.CharField(max_length=100, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, null=True)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, null=True, blank=True, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
     def __str__(self):

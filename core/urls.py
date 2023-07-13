@@ -5,6 +5,7 @@ from .views import *
 app_name = 'core'
 
 urlpatterns = [
+    path('uploadwithcsv/', add_items, name='upload'),
     path('orders/', orders, name='orders'),
     path('', home, name='home'),
     path('profile', profile, name='profile'),

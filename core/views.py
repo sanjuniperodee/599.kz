@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+import pandas
 import hashlib
 import uuid
 from email import encoders
@@ -36,6 +37,29 @@ from .models import Item, OrderItem, Order, Coupon, Refund, UserProfile, Brand, 
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+def add_items(request):
+    if request.method == "POST":
+        file = request.FILES["csv_file"]
+        df = pd.read_csv(file)
+        df = df.reset_index()  # make sure indexes pair with number of rows
+        # df = df.dropna()
+        print(df)
+        for index, row in df.iterrows():
+            # print(row)
+            if str(row[4]) == 'nan':
+                break;
+            sub = SubCategory.objects.get_or_create(title=row[3])[0]
+            item = Item(title=row[4],
+                        slug='item' + str(row[0]),
+                        category=Category.objects.get_or_create(title=row[2])[0],
+                        subcategory = sub,
+                        description=row[5],
+                        price=100,
+                        image='https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80',
+                        )
+            item.save()
+    return render(request, 'upload.html')
 
 
 def create_ref_code():
