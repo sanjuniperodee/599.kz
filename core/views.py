@@ -50,9 +50,12 @@ def add_items(request):
             if str(row[4]) == 'nan':
                 break;
             sub = SubCategory.objects.get_or_create(title=row[3])[0]
+            sub.save()
+            category = Category.objects.get_or_create(title=row[2])[0]
+            category.subcategories.add(sub)
             item = Item(title=row[4],
                         slug='item' + str(row[0]),
-                        category=Category.objects.get_or_create(title=row[2])[0],
+                        category= category,
                         subcategory = sub,
                         description=row[5],
                         price=100,

@@ -34,17 +34,59 @@
             font-size: 16px;
             background-color: #FFEA00;
         }
-        .main {
-            height: 700px;
-            width: 100%;
-            background-image: url("{% static 'img/carousel1.png' %}");
-            background-size: cover;
-        }
     </style>
 </head>
 <body>
 {% include "navbar.html" %}
     <div class="main d-none d-lg-block">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 100%; margin-bottom: 50px;">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" style="height: 750px;">
+          <div class="carousel-item active" style="background: url({% static 'img/2.png' %}); height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center;">
+            <!-- <img class="d-block w-100" src="comfy1.jpg" alt="First slide" width="100%"> -->
+{#            <div style="padding: 20% 0 0% 20%">#}
+{#                <h1 style="color: white; margin-bottom: 2%">Создаем уют в вашем доме</h1>#}
+{#                <div style="display: flex; gap: 30px;">#}
+{#                    <div style="color: white; background-color: #82BA66; align-items: center; width: 200px; display: flex; justify-content: space-around;">#}
+{#                        <a>Посмотреть Каталог</a>#}
+{#                    </div>#}
+{#                    <div style="color: #82BA66; border-style: solid; padding: 20px; align-items: center; width: 200px; display: flex; justify-content: space-around; border-color: #82BA66; border-width: 2px;">#}
+{#                        <a>#}
+{#                            Заказать Звонок#}
+{#                        </a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+          </div>
+          <div class="carousel-item" style="background: url({% static 'img/3.png' %}); height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center;">
+            <!-- <img class="d-block w-100" src="comfy.avif" alt="Second slide" width="100%"> -->
+          </div>
+          <div class="carousel-item" style="background: url({% static 'img/3.png' %}); height: 100%; background-repeat: no-repeat; background-size: cover; background-position: top;">
+
+          </div>
+            <div class="carousel-item" style="background: url({% static 'img/4.png' %}); height: 100%; background-repeat: no-repeat; background-size: cover; background-position: top;">
+
+          </div>
+            <div class="carousel-item" style="background: url({% static 'img/5.png' %}); height: 100%; background-repeat: no-repeat; background-size: cover; background-position: top;">
+
+          </div>
+            <div class="carousel-item" style="background: url({% static 'img/6.png' %}); height: 100%; background-repeat: no-repeat; background-size: cover; background-position: top;">
+
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+    </div>
 {#        <a>Закупиться сейчас</a>#}
     </div>
     <div class="mobile d-lg-none d-md-none d-sm-block">
