@@ -181,191 +181,98 @@
 {#								</ul>#}
 {#							</div>#}
 {#                            {% endfor %}#}
+                            {% for category in categories %}
                             <div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">
 								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-									<div class="cat_menu_text">Техника и электроника</div>
+									<div class="cat_menu_text">{{ category.title }}</div>
                                     <i class="fas fa-chevron-down"></i>
 								</div>
 
 								<ul class="cat_menu">
-
-                                    <li><a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D1%8B%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Мобильные телефоны и аксессуары<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0">Электроника<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9D%D0%B0%D1%80%D1%83%D1%87%D0%BD%D1%8B%D0%B5%20%D1%87%D0%B0%D1%81%D1%8B">Наручные часы<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D0%B8%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Автомобили и аксессуары<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%B8%D0%BD%D0%B0%D0%B4%D0%BB%D0%B5%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8">Электронные компоненты и принадлежности<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
+                                    {% for sub in category.subcategories.all %}
+                                    <li><a href="{% url 'core:shop' category.title sub.title %}">{{ sub.title }}<i class="fas fa-chevron-right ml-auto"></i></a></li>
+                                    {% endfor %}
 								</ul>
 							</div>
-
-							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">
-								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-									<div class="cat_menu_text">Бытовые товары и инструменты</div>
-                                    <i class="fas fa-chevron-down"></i>
-								</div>
-
-								<ul class="cat_menu">
-
-                                    <li><a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0">Бытовая техника<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%94%D0%BE%D0%BC%20%D0%B8%20%D1%81%D0%B0%D0%B4,%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B">Дом и сад, инструменты<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D0%B0%D0%B3%D0%B0%D0%B6%20%D0%B8%20%D1%81%D1%83%D0%BC%D0%BA%D0%B8">Багаж и сумки<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-								</ul>
-							</div>
-
-							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">
-								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-									<div class="cat_menu_text">Офисные товары и канцелярия</div>
-                                    <i class="fas fa-chevron-down"></i>
-								</div>
-
-								<ul class="cat_menu">
-
-                                    <li><a href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%B0%D0%BD%D1%86%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B">Канц товары<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-								</ul>
-							</div>
-
-							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">
-								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-									<div class="cat_menu_text">Строительные и ремонтные товары</div>
-                                    <i class="fas fa-chevron-down"></i>
-								</div>
-
-								<ul class="cat_menu">
-
-                                    <li><a href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82">Строительство и ремонт<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-								</ul>
-							</div>
-
-							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">
-								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-									<div class="cat_menu_text">Аксессуары</div>
-                                    <i class="fas fa-chevron-down"></i>
-								</div>
-
-								<ul class="cat_menu" style="left:-100%">
-
-                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D1%8B%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Мобильные телефоны и аксессуары<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0">Электроника<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9D%D0%B0%D1%80%D1%83%D1%87%D0%BD%D1%8B%D0%B5%20%D1%87%D0%B0%D1%81%D1%8B">Наручные часы<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-								</ul>
-							</div>
-
-							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">
-								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-									<div class="cat_menu_text">Одежда и Обувь</div>
-                                    <i class="fas fa-chevron-down"></i>
-								</div>
-
-								<ul class="cat_menu" style="left:-50%">
-
-                                    <li><a href="/shop/Одежда%20и%20Обувь/Летняя">Одежда<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%9E%D0%B1%D1%83%D0%B2%D1%8C">Обувь<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-                                    <li><a href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%94%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0">Детская одежда<i class="fas fa-chevron-right ml-auto"></i></a></li>
-
-								</ul>
-							</div>
-{#							<div class="main_nav_menu w-100 m-0 p-0 d-none d-lg-block d-xl-block" >#}
-{#								<ul class="standard_dropdown main_nav_dropdown d-flex justify-content-between m-0 p-0" style="margin: 0; padding: 0">#}
+                            {% endfor %}
 {##}
-{#									<li class="hassubs">#}
-{#										<a href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/all" style="font-size: 80%; color: black">Техника и электроника<i class="fas fa-chevron-down"></i></a>#}
-{#										<ul>#}
+{#							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">#}
+{#								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">#}
+{#									<div class="cat_menu_text">Бытовые товары и инструменты</div>#}
+{#                                    <i class="fas fa-chevron-down"></i>#}
+{#								</div>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D1%8B%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Мобильные телефоны и аксессуары<i class="fas fa-chevron-down"></i></a></li>#}
+{#								<ul class="cat_menu">#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-down"></i></a></li>#}
+{#                                    <li><a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0">Бытовая техника<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0">Электроника<i class="fas fa-chevron-down"></i></a></li>#}
+{#                                    <li><a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%94%D0%BE%D0%BC%20%D0%B8%20%D1%81%D0%B0%D0%B4,%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B">Дом и сад, инструменты<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%9D%D0%B0%D1%80%D1%83%D1%87%D0%BD%D1%8B%D0%B5%20%D1%87%D0%B0%D1%81%D1%8B">Наручные часы<i class="fas fa-chevron-down"></i></a></li>#}
+{#                                    <li><a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D0%B0%D0%B3%D0%B0%D0%B6%20%D0%B8%20%D1%81%D1%83%D0%BC%D0%BA%D0%B8">Багаж и сумки<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%20%D0%B8%20%D0%BC%D0%BE%D1%82%D0%BE%D1%86%D0%B8%D0%BA%D0%BB">Автомобиль и мотоцикл<i class="fas fa-chevron-down"></i></a></li>#}
+{#								</ul>#}
+{#							</div>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%B8%20%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%B8%D0%BD%D0%B0%D0%B4%D0%BB%D0%B5%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8">Электронные компоненты и принадлежности<i class="fas fa-chevron-down"></i></a></li>#}
+{#							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">#}
+{#								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">#}
+{#									<div class="cat_menu_text">Офисные товары и канцелярия</div>#}
+{#                                    <i class="fas fa-chevron-down"></i>#}
+{#								</div>#}
 {##}
-{#										</ul>#}
-{#									</li>#}
+{#								<ul class="cat_menu">#}
 {##}
-{#									<li class="hassubs">#}
-{#										<a href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/all" style="font-size: 80%; color: black">Бытовые товары и инструменты<i class="fas fa-chevron-down"></i></a>#}
-{#										<ul>#}
+{#                                    <li><a href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0">Бытовая техника<i class="fas fa-chevron-down"></i></a></li>#}
+{#                                    <li><a href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%B0%D0%BD%D1%86%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B">Канц товары<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%94%D0%BE%D0%BC%20%D0%B8%20%D1%81%D0%B0%D0%B4,%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B">Дом и сад, инструменты<i class="fas fa-chevron-down"></i></a></li>#}
+{#								</ul>#}
+{#							</div>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%91%D1%8B%D1%82%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/%D0%91%D0%B0%D0%B3%D0%B0%D0%B6%20%D0%B8%20%D1%81%D1%83%D0%BC%D0%BA%D0%B8">Багаж и сумки<i class="fas fa-chevron-down"></i></a></li>#}
+{#							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">#}
+{#								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">#}
+{#									<div class="cat_menu_text">Строительные и ремонтные товары</div>#}
+{#                                    <i class="fas fa-chevron-down"></i>#}
+{#								</div>#}
 {##}
-{#										</ul>#}
-{#									</li>#}
+{#								<ul class="cat_menu">#}
 {##}
-{#									<li class="hassubs">#}
-{#										<a href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/all" style="font-size: 80%; color: black">Офисные товары и канцелярия<i class="fas fa-chevron-down"></i></a>#}
-{#										<ul>#}
+{#                                    <li><a href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82">Строительство и ремонт<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-down"></i></a></li>#}
+{#								</ul>#}
+{#							</div>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%9E%D1%84%D0%B8%D1%81%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B8%20%D0%BA%D0%B0%D0%BD%D1%86%D0%B5%D0%BB%D1%8F%D1%80%D0%B8%D1%8F/%D0%9A%D0%B0%D0%BD%D1%86%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B">Канц товары<i class="fas fa-chevron-down"></i></a></li>#}
+{#							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">#}
+{#								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">#}
+{#									<div class="cat_menu_text">Аксессуары</div>#}
+{#                                    <i class="fas fa-chevron-down"></i>#}
+{#								</div>#}
 {##}
-{#										</ul>#}
-{#									</li>#}
+{#								<ul class="cat_menu" style="left:-100%">#}
 {##}
-{#									<li class="hassubs">#}
-{#										<a href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/all" style="font-size: 80%; color: black">Строительные и ремонтные товары<i class="fas fa-chevron-down"></i></a>#}
-{#										<ul>#}
+{#                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D1%8B%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Мобильные телефоны и аксессуары<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82%D0%BD%D1%8B%D0%B5%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%D1%8B/%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE%20%D0%B8%20%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82">Строительство и ремонт<i class="fas fa-chevron-down"></i></a></li>#}
+{#                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#										</ul>#}
-{#									</li>#}
+{#                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0">Электроника<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#									<li class="hassubs">#}
-{#										<a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/all" style="font-size: 80%; color: black">Аксессуары<i class="fas fa-chevron-down"></i></a>#}
-{#										<ul>#}
+{#                                    <li><a href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9D%D0%B0%D1%80%D1%83%D1%87%D0%BD%D1%8B%D0%B5%20%D1%87%D0%B0%D1%81%D1%8B">Наручные часы<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9C%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD%D1%8B%20%D0%B8%20%D0%B0%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B">Мобильные телефоны и аксессуары<i class="fas fa-chevron-down"></i></a></li>#}
+{#								</ul>#}
+{#							</div>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%20%D0%B8%20%D0%BE%D1%84%D0%B8%D1%81">Компьютер и офис<i class="fas fa-chevron-down"></i></a></li>#}
+{#							<div class="cat_menu_container d-none d-lg-block d-md-block d-xl-block m-0 p-0">#}
+{#								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">#}
+{#									<div class="cat_menu_text">Одежда и Обувь</div>#}
+{#                                    <i class="fas fa-chevron-down"></i>#}
+{#								</div>#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0">Электроника<i class="fas fa-chevron-down"></i></a></li>#}
+{#								<ul class="cat_menu" style="left:-50%">#}
 {##}
-{#											<li><a style="color: black" href="/shop/%D0%90%D0%BA%D1%81%D0%B5%D1%81%D1%81%D1%83%D0%B0%D1%80%D1%8B/%D0%9D%D0%B0%D1%80%D1%83%D1%87%D0%BD%D1%8B%D0%B5%20%D1%87%D0%B0%D1%81%D1%8B">Наручные часы<i class="fas fa-chevron-down"></i></a></li>#}
+{#                                    <li><a href="/shop/Одежда%20и%20Обувь/Летняя">Одежда<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#										</ul>#}
-{#									</li>#}
+{#                                    <li><a href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%9E%D0%B1%D1%83%D0%B2%D1%8C">Обувь<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
-{#									<li class="hassubs">#}
-{#										<a href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/all" style="font-size: 80%; color: black">Одежда и Обувь<i class="fas fa-chevron-down"></i></a>#}
-{#										<ul>#}
-{##}
-{#											<li><a style="color: black" href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0">Одежда<i class="fas fa-chevron-down"></i></a></li>#}
-{##}
-{#											<li><a style="color: black" href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%9E%D0%B1%D1%83%D0%B2%D1%8C">Обувь<i class="fas fa-chevron-down"></i></a></li>#}
-{##}
-{#											<li><a style="color: black" href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%94%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0">Детская одежда<i class="fas fa-chevron-down"></i></a></li>#}
-{##}
-{#										</ul>#}
-{#									</li>#}
+{#                                    <li><a href="/shop/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0%20%D0%B8%20%D0%BE%D0%B1%D1%83%D0%B2%D1%8C/%D0%94%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0">Детская одежда<i class="fas fa-chevron-right ml-auto"></i></a></li>#}
 {##}
 {#								</ul>#}
 {#							</div>#}
