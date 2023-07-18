@@ -188,7 +188,7 @@
                                     <i class="fas fa-chevron-down"></i>
 								</div>
 
-								<ul class="cat_menu">
+								<ul class="cat_menu" {% if category.title == 'Аксессуары' %}style="left:-80px{% endif %}">
                                     {% for sub in category.subcategories.all %}
                                     <li><a href="{% url 'core:shop' category.title sub.title %}">{{ sub.title }}<i class="fas fa-chevron-right ml-auto"></i></a></li>
                                     {% endfor %}
