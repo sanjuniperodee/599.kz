@@ -51,7 +51,7 @@
 <div class="sidebar_title">Категории</div>
 <ul class="sidebar_categories" style="margin-top: 5%">
     {% for sub in category.subcategories.all %}
-<li><a href="{% url 'core:shop' category.title sub.title %}">{{ sub.title }}</a></li>
+<li><a href="{% url 'core:shop' category.title sub.title 'all'%}">{{ sub.title }}</a></li>
     {% endfor %}
 </ul>
 </div>
@@ -81,7 +81,7 @@
 
 <div class="shop_content">
 <div class="shop_bar clearfix">
-<div class="shop_product_count"><span>{{ object_list.length }}</span>Результаты поиска</div>
+<div class="shop_product_count"><span>{{ object_list.length }}</span>Результаты поиска по: {{ search }}</div>
 <div class="shop_sorting">
 <span>Отсортировано:</span>
 <ul>

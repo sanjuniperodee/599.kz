@@ -179,11 +179,27 @@ def SuccesPayment(request):
 
 
 @csrf_exempt
-def home1(request, ctg, ctg2):
+def home1(request, ctg, ctg2, ctg3):
+    input = ctg3
+    input1 = input[0].upper() + input[1:]
     if ctg2 != 'all':
-        object_list = Item.objects.filter(category__title=ctg, subcategory__title=ctg2)
+        if ctg3 != 'all':
+            object_list = Item.objects.filter(Q(title__icontains=input) | Q(slug__icontains=input) | Q(title__icontains=input.upper()) | Q(title__icontains=input1), category__title=ctg, subcategory__title=ctg2)
+        else:
+            object_list = Item.objects.filter(category__title=ctg, subcategory__title=ctg2)
     else:
-        object_list = Item.objects.filter(category__title=ctg)
+        if ctg3 != 'all':
+            object_list = Item.objects.filter(
+                Q(title__icontains=input) | Q(slug__icontains=input) | Q(title__icontains=input.upper()) | Q(
+                    title__icontains=input1), category__title=ctg)
+        else:
+            object_list = Item.objects.filter(category__title=ctg)
+    if request.method == 'POST':
+        input = request.POST.get('search')
+        print(request.POST.get('picked'))
+        print('last')
+        print(input)
+        return redirect("core:shop", ctg=request.POST.get('picked'), ctg2='all', ctg3=input)
     paginator = Paginator(object_list, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -193,6 +209,7 @@ def home1(request, ctg, ctg2):
         'object_list': page_obj,
         'user': request.user,
         'categories': categories,
+        'search': ctg3,
     }
     return render(request, 'shop.html', context)
 
@@ -254,9 +271,10 @@ def home(request):
             print(request.session['nonuser'])
     if request.method == 'POST':
         input = request.POST.get('search')
-        input1 = input[0].upper() + input[1:]
-        list = Item.objects.filter(Q(title__icontains=input) | Q(acrtiul__icontains=input) | Q(title__icontains=input.upper()) | Q(title__icontains=input1))
-        search = True
+        print(request.POST.get('picked'))
+        print('last')
+        print(input)
+        return redirect("core:shop", ctg=request.POST.get('picked'), ctg2='all', ctg3=input)
     categories = Category.objects.all()
     items = Item.objects.all()
     if _user_is_authenticated(request.user) and len(Order.objects.filter(user=request.user)) > 0:
