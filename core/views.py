@@ -199,7 +199,11 @@ def home1(request, ctg, ctg2, ctg3):
         print(request.POST.get('picked'))
         print('last')
         print(input)
-        return redirect("core:shop", ctg=request.POST.get('picked'), ctg2='all', ctg3=input)
+        search = request.POST.get('picked')
+        if len(Category.objects.filter(title=search)) > 0:
+            return redirect("core:shop", ctg=request.POST.get('picked'), ctg2='all', ctg3=input)
+        else:
+            return redirect("core:shop", ctg=Category.objects.filter(subcategories__title=search)[0].title, ctg2=search, ctg3=input)
     paginator = Paginator(object_list, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -274,7 +278,11 @@ def home(request):
         print(request.POST.get('picked'))
         print('last')
         print(input)
-        return redirect("core:shop", ctg=request.POST.get('picked'), ctg2='all', ctg3=input)
+        search = request.POST.get('picked')
+        if len(Category.objects.filter(title=search)) > 0:
+            return redirect("core:shop", ctg=request.POST.get('picked'), ctg2='all', ctg3=input)
+        else:
+            return redirect("core:shop", ctg=Category.objects.filter(subcategories__title=search)[0].title, ctg2=search,ctg3=input)
     categories = Category.objects.all()
     items = Item.objects.all()
     if _user_is_authenticated(request.user) and len(Order.objects.filter(user=request.user)) > 0:

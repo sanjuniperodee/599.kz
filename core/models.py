@@ -23,6 +23,7 @@ class Category(models.Model):
     title = models.CharField(max_length=225, null=True)
     # subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, default=None, null=True)
     subcategories = models.ManyToManyField(SubCategory, default=None)
+    show = models.BooleanField(default=True, null=True, blank=True)
     def __str__(self):
         return self.title
 

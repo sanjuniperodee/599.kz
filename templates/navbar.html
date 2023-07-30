@@ -119,6 +119,9 @@
                                                     <li><a class="clc category-link" href="#" data-value="all">Все категории</a></li>
                                                     {% for category in categories %}
                                                         <li><a class="clc category-link" href="#" data-value="{{ category.title }}">{{ category.title }}</a></li>
+                                                        {% for sub in category.subcategories.all %}
+                                                            <li><a class="clc category-link" href="#" data-value="{{ sub.title }}">{{ sub.title }}</a></li>
+                                                        {% endfor %}
                                                     {% endfor %}
                                                 </ul>
                                             </div>
